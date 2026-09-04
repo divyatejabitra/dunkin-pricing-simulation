@@ -8,13 +8,42 @@
  *   3. Click "Run" (the play button) on createDunkinSurveyForms.
  *   4. The first run will ask you to authorize the script - this is normal
  *      (it needs permission to create Forms in your Drive). Approve it.
- *   5. Once it finishes, go to View > Logs (or Ctrl+Enter) to see the edit
- *      and live links for all three forms.
+ *   5. Once it finishes, go to View > Logs (or Ctrl+Enter) to see the edit,
+ *      live, and response-spreadsheet links for all three forms.
  *
  * If your University Google Workspace account blocks Apps Script execution,
  * use the manual per-version text files (version_A_discount.txt etc.) and
  * README.txt in this same folder instead - same questions, built by hand.
+ *
+ * ALREADY HAVE FORMS BUILT? Don't rerun this - it creates brand new forms
+ * each time. Instead use addSheetsAndSharingToExistingForms() below, which
+ * links response spreadsheets and shares them on forms you already made.
  */
+
+// Fill in your teammates' emails before running either function. Leave the
+// array empty ([]) to skip sharing and just create the linked response
+// spreadsheets for yourself.
+var TEAMMATE_EMAILS = [];
+
+/**
+ * Creates the destination Spreadsheet for a form's responses, and shares
+ * access with TEAMMATE_EMAILS: the Form itself as viewer (so nobody
+ * accidentally edits a live survey mid-collection), and the response
+ * Spreadsheet as editor (so the team can jointly filter/clean/export data).
+ * Returns the spreadsheet's URL.
+ */
+function addResponseSheetAndShare(form, label) {
+  var sheet = SpreadsheetApp.create(label + " Responses");
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, sheet.getId());
+
+  TEAMMATE_EMAILS.forEach(function (email) {
+    DriveApp.getFileById(form.getId()).addViewer(email);
+    sheet.addEditor(email);
+  });
+
+  return sheet.getUrl();
+}
+
 function createDunkinSurveyForms() {
   var versions = [
     { label: "Version A", coffeePrice: "2.75", lattePrice: "5.00" },
@@ -149,7 +178,39 @@ function createDunkinSurveyForms() {
     q1.setChoices([q1.createChoice("Yes", page2), q1.createChoice("No", endPage)]);
     q2.setChoices([q2.createChoice("Yes", mainPage), q2.createChoice("No", endPage)]);
 
-    summary.push(v.label + ": edit " + form.getEditUrl() + " | live " + form.getPublishedUrl());
+    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Survey - " + v.label);
+
+    summary.push(
+      v.label + ": edit " + form.getEditUrl() + " | live " + form.getPublishedUrl() + " | responses " + sheetUrl
+    );
+  });
+
+  Logger.log(summary.join("\n"));
+}
+
+/**
+ * Run this once on forms you ALREADY built (via createDunkinSurveyForms or
+ * by hand) to add a linked response spreadsheet and share it with
+ * TEAMMATE_EMAILS, without creating any duplicate forms.
+ *
+ * Fill in the three form IDs below - it's the part of the edit URL between
+ * "/forms/d/" and "/edit", e.g. for
+ * https://docs.google.com/forms/d/11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4/edit
+ * the ID is 11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4
+ */
+function addSheetsAndSharingToExistingForms() {
+  var existingForms = [
+    { label: "Version A", formId: "11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4" },
+    { label: "Version B", formId: "1H78KLGZ8TuTdYPrVVnxe44Ky52WM78wImiMJSuilvV4" },
+    { label: "Version C", formId: "1iH-VpbkPrQNUSzA2C5qmnsih52g9Hy4a36RsHYKkBSE" },
+  ];
+
+  var summary = [];
+
+  existingForms.forEach(function (f) {
+    var form = FormApp.openById(f.formId);
+    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Survey - " + f.label);
+    summary.push(f.label + ": responses " + sheetUrl);
   });
 
   Logger.log(summary.join("\n"));

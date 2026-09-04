@@ -7,13 +7,30 @@ FASTEST PATH - run the script (recommended):
 3. Click Run on createDunkinSurveyForms, approve the permission prompt (it needs access
    to create Forms in your Drive - this is your own script, running under your own
    account, so this is normal and expected).
-4. View > Logs shows the edit + live link for all three forms - it builds all 39
-   questions across Version A/B/C, including the screening skip-logic, in one go.
+4. View > Logs shows the edit, live, and response-spreadsheet link for all three forms -
+   it builds all 39 questions across Version A/B/C, including the screening skip-logic,
+   in one go.
 5. Rename each Form if you want a cleaner title, then hand the live links to your team
    using the rotation instructions in surveyor_instructions.md.
 
 If your University Google Workspace account blocks Apps Script execution (some schools
 restrict this), fall back to the manual path below.
+
+ALREADY BUILT THE THREE FORMS AND JUST NEED RESPONSE SHEETS + SHARING?
+
+Don't rerun createDunkinSurveyForms - it creates brand new forms every time and you'd end
+up with duplicates. Instead:
+
+1. Open create_forms.gs in the Apps Script editor, fill in TEAMMATE_EMAILS near the top
+   with your teammates' email addresses (or leave it as [] to just create the response
+   sheets for yourself, no sharing).
+2. If needed, update the three formId values inside addSheetsAndSharingToExistingForms()
+   - they're the part of each edit URL between "/forms/d/" and "/edit".
+3. Select addSheetsAndSharingToExistingForms in the function dropdown (next to Run) and
+   click Run.
+4. View > Logs shows a new response-spreadsheet link per version. Each Form is now shared
+   as viewer (so nobody accidentally edits a live survey mid-collection) and its response
+   spreadsheet as editor, with everyone in TEAMMATE_EMAILS.
 
 MANUAL PATH (fallback, no scripting):
 
