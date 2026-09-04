@@ -1,4 +1,21 @@
-How to build these in Google Forms (fastest path):
+How to build these in Google Forms
+
+FASTEST PATH - run the script (recommended):
+
+1. Go to https://script.google.com -> New project.
+2. Paste in create_forms.gs (delete the placeholder code first).
+3. Click Run on createDunkinSurveyForms, approve the permission prompt (it needs access
+   to create Forms in your Drive - this is your own script, running under your own
+   account, so this is normal and expected).
+4. View > Logs shows the edit + live link for all three forms - it builds all 39
+   questions across Version A/B/C, including the screening skip-logic, in one go.
+5. Rename each Form if you want a cleaner title, then hand the live links to your team
+   using the rotation instructions in surveyor_instructions.md.
+
+If your University Google Workspace account blocks Apps Script execution (some schools
+restrict this), fall back to the manual path below.
+
+MANUAL PATH (fallback, no scripting):
 
 1. Build Version A (version_A_discount.txt) as a new Google Form, following the
    [Multiple choice] / [Linear scale] / [Paragraph] labels for question type, and the
@@ -10,6 +27,7 @@ How to build these in Google Forms (fastest path):
 4. Rename each Form clearly (e.g. "Campus Coffee Survey - A", "- B", "- C") so surveyors
    grab the right link, and share the rotation instructions from survey_design.md with
    whoever is collecting responses (1st respondent -> A, 2nd -> B, 3rd -> C, repeat).
-5. Google Forms auto-tracks responses per Form, so when the pooled dataset comes together,
-   each response's price condition (A/B/C) is already known from which Form it came from -
-   no need to ask respondents which version they got.
+
+Either way: Google Forms auto-tracks responses per Form, so when the pooled dataset comes
+together, each response's price condition (A/B/C) is already known from which Form it came
+from - no need to ask respondents which version they got.

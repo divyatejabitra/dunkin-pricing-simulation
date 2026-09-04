@@ -64,9 +64,12 @@ actually decide it.
 The proposed student questionnaire for the 10/8 survey-design presentation - a **between-
 subjects, randomized single-price-point** design (each respondent sees only one of the three
 price scenarios per product, to avoid anchoring bias), built as three parallel Google Forms
-(`google_forms/version_A_discount.txt`, `_B_match.txt`, `_C_premium.txt`) that surveyors
-rotate through as they collect responses. `google_forms/surveyor_instructions.md` is a
-printable one-pager for whoever is collecting the 10 responses per teammate in person.
+that surveyors rotate through as they collect responses.
+`google_forms/create_forms.gs` is a Google Apps Script that builds all three live Forms
+(including the screening skip-logic) in one run - see `google_forms/README.txt` for how to
+run it, or build them by hand from `version_A_discount.txt` / `_B_match.txt` /
+`_C_premium.txt` if Apps Script isn't available. `google_forms/surveyor_instructions.md` is
+a printable one-pager for whoever is collecting the 10 responses per teammate in person.
 
 ## Next: the elasticity phase (after 10/19)
 
