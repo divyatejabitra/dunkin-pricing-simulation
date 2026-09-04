@@ -1,0 +1,115 @@
+====================================================================
+GOOGLE FORM - VERSION B (match off-campus price)
+Give this version to respondents #2, #5, #8 that each surveyor talks to.
+====================================================================
+
+FORM TITLE:
+Campus Coffee Preferences Survey
+
+FORM DESCRIPTION:
+This short survey is part of a University of Rochester Simon Business School class
+project. Your responses are anonymous and will only be used in aggregate for academic
+purposes. It takes about 2 minutes.
+
+--------------------------------------------------------------------
+SECTION 1 - Screening
+--------------------------------------------------------------------
+
+Q1 [Multiple choice, required]
+Are you currently a student, faculty, or staff member at the University of Rochester?
+( ) Yes
+( ) No
+
+>> Forms setup: set this question's response validation to "Go to section based on
+   answer" - route "No" to a final "Thank you" section that ends the form immediately.
+
+Q2 [Multiple choice, required]
+Do you drink hot coffee or lattes at least occasionally?
+( ) Yes
+( ) No
+
+>> Forms setup: same as above - route "No" to end the form immediately.
+
+--------------------------------------------------------------------
+SECTION 2 - About you
+--------------------------------------------------------------------
+
+Q3 [Multiple choice, required]
+What is your status?
+( ) Undergraduate student
+( ) Graduate student
+( ) Staff
+( ) Faculty
+
+Q4 [Multiple choice, required]
+Do you live on campus or off campus?
+( ) On campus
+( ) Off campus
+
+Q5 [Multiple choice, required]
+Do you have a University dining plan or dining dollars?
+( ) Yes
+( ) No
+
+Q6 [Multiple choice, required]
+In a typical week, how often do you buy coffee or a latte on or near campus?
+( ) 0 times
+( ) 1-2 times
+( ) 3-5 times
+( ) 6+ times
+
+Q7 [Multiple choice, required]
+Which of the following do you currently buy coffee from most often?
+( ) Starbucks - Wilson Commons
+( ) Peet's Coffee - Wegmans Hall
+( ) Brew
+( ) An off-campus coffee shop
+( ) I make my own
+( ) Other: ______
+
+--------------------------------------------------------------------
+SECTION 3 - Dunkin' brand awareness
+--------------------------------------------------------------------
+
+Q8 [Linear scale 1-5, required]
+How familiar are you with Dunkin' as a brand?
+1 = Not at all familiar ... 5 = Extremely familiar
+
+Q9 [Linear scale 1-5, required]
+If Dunkin' opened a location on River Campus, how interested would you be in trying it?
+1 = Not at all interested ... 5 = Extremely interested
+
+--------------------------------------------------------------------
+SECTION 4 - Pricing (THIS SECTION DIFFERS BY VERSION - this is Version B)
+--------------------------------------------------------------------
+
+Q10 [Linear scale 1-5, required]
+If Dunkin' opened on campus and sold a medium hot coffee for $3.00, how likely would you
+be to purchase it instead of your usual coffee?
+1 = Very unlikely ... 5 = Very likely
+
+Q11 [Linear scale 1-5, required]
+If Dunkin' opened on campus and sold a medium hot latte for $5.25, how likely would you
+be to purchase it instead of your usual latte?
+1 = Very unlikely ... 5 = Very likely
+
+--------------------------------------------------------------------
+SECTION 5 - Payment method
+--------------------------------------------------------------------
+
+Q12 [Linear scale 1-5, required]
+If Dunkin' did NOT accept University dining dollars or meal-plan swipes (cash/card only),
+how would that affect your likelihood of buying there?
+1 = Much less likely ... 5 = No change
+
+--------------------------------------------------------------------
+SECTION 6 - Open-ended (optional)
+--------------------------------------------------------------------
+
+Q13 [Paragraph, optional]
+What, if anything, would make you choose Dunkin' over Starbucks, Peet's, or Brew on campus?
+
+--------------------------------------------------------------------
+END SECTION
+--------------------------------------------------------------------
+Thank you for your time!
