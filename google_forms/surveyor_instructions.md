@@ -6,11 +6,14 @@ link is easiest to reach.
 
 ## Your three links
 
-Fill these in once the Forms are built (see `README.txt`):
+- Version A (discount): https://docs.google.com/forms/d/e/1FAIpQLSe5rwCWAIaGeUlMecqjwIHuSnLebWgXmGPXXT-ZpOSY5C28vg/viewform
+- Version B (match): https://docs.google.com/forms/d/e/1FAIpQLSdPIv0UimxfxEhZLmidP2xBDd5qD3JOy5ZmRilo1L_dVBBLYg/viewform
+- Version C (premium): https://docs.google.com/forms/d/e/1FAIpQLScYvEUOHxED2UOO8kqZnBHDRVdk7p-0vyhnVli_H1j4rIKYqg/viewform
 
-- Version A (discount): _______________________________________________
-- Version B (match): __________________________________________________
-- Version C (premium): ________________________________________________
+(Edit-only links, for whoever owns the Forms and needs to tweak them - not for surveying:
+[A](https://docs.google.com/forms/d/11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4/edit) /
+[B](https://docs.google.com/forms/d/1H78KLGZ8TuTdYPrVVnxe44Ky52WM78wImiMJSuilvV4/edit) /
+[C](https://docs.google.com/forms/d/1iH-VpbkPrQNUSzA2C5qmnsih52g9Hy4a36RsHYKkBSE/edit))
 
 ## Rotation - which link to use, in order
 
