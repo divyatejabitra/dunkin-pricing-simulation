@@ -1,0 +1,810 @@
+<title>The Campus Coffee Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #EDEAE3;
+    --surface: #FFFFFF;
+    --surface-2: #F5F2EB;
+    --ink: #221D18;
+    --ink-muted: #5B5347;
+    --ink-faint: #8B8477;
+    --line: #DBD5C8;
+    --accent: #8C6A2F;
+    --accent-ink: #FFFFFF;
+    --good: #4B7355;
+
+    --brand-dunkin: #FF6A13;
+    --brand-starbucks: #00704A;
+    --brand-peets: #6F2C2C;
+    --brand-timhortons: #D52B1E;
+    --brand-dutchbros: #123A57;
+    --brand-mccafe: #DA291C;
+    --brand-indep: #8B8477;
+
+    --font-display: "Zilla Slab", Georgia, serif;
+    --font-body: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1B1815;
+      --surface: #242019;
+      --surface-2: #2C2720;
+      --ink: #F3EFE8;
+      --ink-muted: #C8C0B2;
+      --ink-faint: #948C7C;
+      --line: #3B352C;
+      --accent: #C89B4A;
+      --accent-ink: #1B1815;
+      --good: #7FAE8B;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #1B1815;
+    --surface: #242019;
+    --surface-2: #2C2720;
+    --ink: #F3EFE8;
+    --ink-muted: #C8C0B2;
+    --ink-faint: #948C7C;
+    --line: #3B352C;
+    --accent: #C89B4A;
+    --accent-ink: #1B1815;
+    --good: #7FAE8B;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    padding: 0 0 84px 0;
+  }
+
+  h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; }
+
+  .deck {
+    scroll-snap-type: y proximity;
+    overflow-y: auto;
+  }
+
+  .slide {
+    scroll-snap-align: start;
+    min-height: min(860px, 92vh);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 48px clamp(20px, 4vw, 56px) 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .slide h2 {
+    font-size: clamp(30px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.05;
+  }
+
+  .subhead {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 62ch;
+  }
+
+  .brand-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-muted);
+  }
+  .swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    flex: none;
+    display: inline-block;
+  }
+
+  /* ---------- Cover ---------- */
+  .cover {
+    justify-content: center;
+    gap: 28px;
+  }
+  .cover .kicker {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .cover h1 {
+    font-size: clamp(38px, 6vw, 62px);
+    font-weight: 700;
+    line-height: 1.03;
+    max-width: 16ch;
+  }
+  .cover .lede {
+    font-size: 19px;
+    color: var(--ink-muted);
+    max-width: 58ch;
+  }
+  .cover-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--ink-faint);
+  }
+  .cover-meta strong { color: var(--ink); font-weight: 600; }
+  .note-box {
+    margin-top: 8px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    max-width: 62ch;
+  }
+
+  /* ---------- Competitor slide layout ---------- */
+  .competitor-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: 32px;
+    flex: 1;
+  }
+  @media (max-width: 720px) {
+    .competitor-body { grid-template-columns: 1fr; }
+  }
+
+  .price-panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .meter-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-bottom: 6px;
+  }
+  .meter-label .metric-name { font-weight: 600; color: var(--ink); }
+  .meter-track {
+    position: relative;
+    height: 34px;
+    background: var(--surface-2);
+    border-radius: 8px;
+    margin-bottom: 4px;
+  }
+  .tick {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+  }
+  .tick-label {
+    position: absolute;
+    top: 38px;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-faint);
+  }
+  .pin {
+    position: absolute;
+    top: 4px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 2px solid var(--surface);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+    transform: translateX(-50%);
+  }
+  .pin.dunkin-pin {
+    background: var(--brand-dunkin);
+  }
+  .pin-tag {
+    position: absolute;
+    top: -22px;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .meter-block { margin-bottom: 26px; }
+  .meter-block:last-child { margin-bottom: 0; }
+  .price-legend {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: var(--ink-muted);
+    padding-top: 4px;
+    border-top: 1px solid var(--line);
+  }
+  .price-legend .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; margin-right: 5px; }
+  .unconfirmed-note {
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  .footnote {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 2px;
+  }
+
+  .info-col { display: flex; flex-direction: column; gap: 16px; }
+  .info-card {
+    background: var(--surface-2);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .info-card h3 {
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .info-card p { margin: 0; font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+  .why-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .why-card h3 { color: var(--accent); font-family: var(--font-body); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 8px;}
+  .why-card p { margin: 0; font-size: 14.5px; line-height: 1.5; }
+
+  /* ---------- Macro slides ---------- */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+  }
+  .stat-tile {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .stat-tile .num {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 26px;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent);
+    display: block;
+  }
+  .stat-tile .num.good { color: var(--good); }
+  .stat-tile .label {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+  .finding-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .finding {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 10px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .finding .mark {
+    font-family: var(--font-mono);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .finding p { margin: 0; font-size: 14.5px; line-height: 1.55; }
+  .finding .tag {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ---------- Nav ---------- */
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    z-index: 10;
+  }
+  .nav-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    background: var(--accent);
+    color: var(--accent-ink);
+    border: none;
+    border-radius: 7px;
+    padding: 9px 16px;
+    cursor: pointer;
+  }
+  .nav-btn:disabled { opacity: 0.35; cursor: default; }
+  .nav-count {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--ink-muted);
+    min-width: 64px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+  }
+  .dots { display: flex; gap: 6px; }
+  .dot-btn {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .dot-btn.active { background: var(--accent); }
+
+  @media (max-width: 560px) {
+    .nav-bar { gap: 10px; }
+    .dots { display: none; }
+  }
+</style>
+
+<div class="deck" id="deck">
+
+  <section class="slide cover" data-title="Cover">
+    <div class="kicker">Preliminary Market Analysis · MKT465 · Simon Business School</div>
+    <h1>The Campus Coffee Map</h1>
+    <p class="lede">Six competitors Dunkin' would face at River Campus — what they charge for
+      a large iced latte and a large hot coffee, who already has a foothold on a college
+      campus, and how students actually perceive them.</p>
+    <div class="cover-meta">
+      <span><strong>Client:</strong> Dunkin'</span>
+      <span><strong>Location:</strong> University of Rochester, River Campus</span>
+      <span><strong>Date:</strong> September 24, 2026</span>
+    </div>
+    <div class="note-box">Every price in this deck is marked <strong>est.</strong> — sourced
+      from third-party menu aggregators, not a verified in-store or app price. Confirm before
+      quoting these numbers to the client. Full source list in the companion speaker notes.</div>
+  </section>
+
+  <!-- 1: Starbucks -->
+  <section class="slide" data-title="Starbucks">
+    <div class="eyebrow">Competitor 1 of 6 — Already on Campus</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-starbucks)"></span>STARBUCKS</span>
+    <h2>Starbucks</h2>
+    <p class="subhead">The incumbent premium anchor, already operating inside Wilson Commons.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="starbucks" data-hot="3.75" data-hot-confirmed="false"
+           data-iced="5.95" data-iced-confirmed="false"></div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Operating today inside Wilson Commons on River Campus. Nationally, licensed
+            Starbucks cafés are a standard fixture in university unions — the most common
+            national campus coffee brand.</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Near-universal brand recognition and a "third place" study/social positioning.
+            Mobile order + Starbucks Rewards drive habitual repeat visits. Frequently named
+            by price-sensitive students as the expensive option.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>Starbucks sets the campus price ceiling and the incumbent habit Dunkin' has to
+            interrupt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2: Peet's -->
+  <section class="slide" data-title="Peet's Coffee">
+    <div class="eyebrow">Competitor 2 of 6 — Already on Campus</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-peets)"></span>PEET'S COFFEE</span>
+    <h2>Peet's Coffee</h2>
+    <p class="subhead">The quieter incumbent, operating inside Wegmans Hall.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="peets" data-hot="3.40" data-hot-confirmed="false"
+           data-iced="5.95" data-iced-confirmed="false"></div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Operating today inside Wegmans Hall on River Campus. Nationally a much smaller
+            footprint than Starbucks, with far lower unaided brand awareness among students.</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Positioned on roast craft and quality rather than value. Lower brand recognition
+            than Starbucks — some students may not register it as a distinct alternative at
+            all.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>Peet's proves two campus coffee options can coexist — but its lower visibility
+            suggests awareness, not just price, drives share here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3: Tim Hortons -->
+  <section class="slide" data-title="Tim Hortons">
+    <div class="eyebrow">Competitor 3 of 6 — Dunkin's Closest National Rival</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-timhortons)"></span>TIM HORTONS</span>
+    <h2>Tim Hortons</h2>
+    <p class="subhead">The other "everyday value" coffee chain — and a proven campus operator.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="timhortons" data-hot="2.49" data-hot-confirmed="true"
+           data-iced="4.19" data-iced-confirmed="false" data-iced-note="medium shown — large not confirmed"></div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Real, documented on-campus locations at University at Buffalo — same region as
+            Rochester — plus Carleton, Ottawa, Manitoba, UBC, and UTSC. UB named Tim Hortons
+            the "Official Coffee of UB Athletics."</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Positioned squarely against Dunkin' as a value everyday-coffee brand. Regional
+            strength grows closer to the Canadian border — a corridor Rochester sits within.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>This is Dunkin's most direct positioning rival, and it already has a real
+            campus foothold one region over.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4: Dutch Bros -->
+  <section class="slide" data-title="Dutch Bros">
+    <div class="eyebrow">Competitor 4 of 6 — The Gen Z Favorite</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-dutchbros)"></span>DUTCH BROS</span>
+    <h2>Dutch Bros Coffee</h2>
+    <p class="subhead">Drive-thru, not dine-in — but it wins the demographic Dunkin' needs.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="dutchbros" data-hot="3.75" data-hot-confirmed="false"
+           data-iced="6.75" data-iced-confirmed="false" data-note="Wide regional range ($3.50–$7.50); figures shown are the range midpoint."></div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Few if any true in-building campus locations, but drive-thru locations cluster
+            near college towns — described in marketing research as a "campus must."</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>80% of orders are customized. Strong TikTok/Instagram culture (2.3M+ #DutchBros
+            views). Friendly "broista" service and a community-giving reputation drive
+            loyalty specifically with under-25 customers.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>Even without a campus location, Dutch Bros shows what wins Gen Z attention —
+            customization and personality, not just price.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5: McCafe -->
+  <section class="slide" data-title="McDonald's McCafe">
+    <div class="eyebrow">Competitor 5 of 6 — The Budget Floor</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-mccafe)"></span>McCAFÉ</span>
+    <h2>McDonald's McCafé</h2>
+    <p class="subhead">The price anchor everyone already knows.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="mccafe" data-hot="1.49" data-hot-confirmed="false"
+           data-hot-note="basic small/entry price — not itemized at large"
+           data-iced="3.19" data-iced-confirmed="false"
+           data-iced-note="large iced coffee shown as a proxy — large iced latte price not found"></div>
+        <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Rarely on-campus, but a location is almost always within walking or driving
+            distance of any campus. Explicitly marketed to budget-conscious young adults,
+            including free-drink promotions for high school and college graduates.</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Seen as the reliable cheap fallback versus Starbucks and Dunkin'. Sets the
+            psychological price floor for the whole category.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>McCafé defines the bottom of the price range Dunkin' is competing across, even
+            without being on campus.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6: Independents -->
+  <section class="slide" data-title="Independent Coffee Shops">
+    <div class="eyebrow">Competitor 6 of 6 — The Off-Campus Alternative</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-indep)"></span>INDEPENDENTS</span>
+    <h2>Independent Coffee Shops Near River Campus</h2>
+    <p class="subhead">Equal Grounds · Java's · Ugly Duck Coffee · Layali Coffeehouse ·
+      Winter Swan Coffee · Albunn Coffee House · Mercury Coffee</p>
+    <div class="competitor-body">
+      <div class="price-panel">
+        <div class="info-card" style="margin:0;">
+          <h3>Pricing</h3>
+          <p><strong>Not yet field-verified.</strong> No chain menu exists to reference for
+            these shops — this is a flagged open item for the team to confirm by visit or
+            ordering app, not a figure to estimate.</p>
+        </div>
+      </div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Not chains, but physically embedded in the walkable off-campus neighborhood
+            immediately surrounding River Campus.</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Chosen for atmosphere and local identity — the "study spot" appeal — rather
+            than price or speed. Represent the off-campus substitute already available to
+            any student willing to walk.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>This is the real substitute Dunkin' is up against for students already living
+            off campus, not just the three on-campus incumbents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7: Macro 1 -->
+  <section class="slide" data-title="Market Size &amp; Growth">
+    <div class="eyebrow">Market Context 1 of 2</div>
+    <h2>A Large, Fragmented, Still-Growing Market</h2>
+    <p class="subhead">And the growth is coming from exactly the population on this campus.</p>
+    <div class="stat-grid">
+      <div class="stat-tile"><span class="num">$58.5B</span><span class="label">US branded coffee shop market, +4.2% last year</span></div>
+      <div class="stat-tile"><span class="num">45,200+</span><span class="label">outlets, across 588 unique brands</span></div>
+      <div class="stat-tile"><span class="num">70–75%</span><span class="label">of category revenue held by chains, not independents</span></div>
+      <div class="stat-tile"><span class="num">66%</span><span class="label">of US adults drank coffee yesterday</span></div>
+      <div class="stat-tile"><span class="num">47%</span><span class="label">had a specialty coffee drink yesterday — a record high</span></div>
+      <div class="stat-tile"><span class="num good">+30%</span><span class="label">growth in coffee use among 18–26 year olds since 2020 — fastest of any age group</span></div>
+    </div>
+    <div class="why-card">
+      <h3>Takeaway</h3>
+      <p>Younger drinkers, not older ones, are the growth engine of this market right now —
+        that's the demand-side case for entering at all.</p>
+    </div>
+  </section>
+
+  <!-- 8: Macro 2 -->
+  <section class="slide" data-title="Price Sensitivity">
+    <div class="eyebrow">Market Context 2 of 2</div>
+    <h2>Price Sensitivity Isn't Just About Age</h2>
+    <div class="finding-list">
+      <div class="finding">
+        <span class="mark">01</span>
+        <p><span class="tag">Broad trend</span>Rising prices are pushing the general
+          population toward home brewing and fewer shop visits (National Coffee Association,
+          2026).</p>
+      </div>
+      <div class="finding">
+        <span class="mark">02</span>
+        <p><span class="tag">Counterintuitive finding</span>Some campus consumer-preference
+          studies find full-time students report a <em>higher</em> willingness to pay and a
+          larger self-reported coffee budget than working adults in the same study.</p>
+      </div>
+      <div class="finding">
+        <span class="mark">03</span>
+        <p><span class="tag">What actually differs</span>Not willingness to pay — it's what
+          students are optimizing for. Frequency/habit and payment friction (dining dollars
+          vs. cash) may matter as much as the sticker price itself.</p>
+      </div>
+    </div>
+    <div class="why-card">
+      <h3>Implication for Dunkin'</h3>
+      <p>A lower price alone may not decide this. Matching students' existing payment
+        method — dining dollars — and building daily habit may matter just as much as
+        beating Starbucks by 25 cents.</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav-bar">
+  <button class="nav-btn" id="prevBtn">← Prev</button>
+  <div class="dots" id="dots"></div>
+  <span class="nav-count" id="navCount">1 / 9</span>
+  <button class="nav-btn" id="nextBtn">Next →</button>
+</div>
+
+<script>
+(function () {
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var deck = document.getElementById('deck');
+  var dotsWrap = document.getElementById('dots');
+  var navCount = document.getElementById('navCount');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var current = 0;
+
+  slides.forEach(function (_, i) {
+    var b = document.createElement('button');
+    b.className = 'dot-btn' + (i === 0 ? ' active' : '');
+    b.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    b.addEventListener('click', function () { goTo(i); });
+    dotsWrap.appendChild(b);
+  });
+
+  function updateUI(i) {
+    current = i;
+    navCount.textContent = (i + 1) + ' / ' + slides.length;
+    prevBtn.disabled = i === 0;
+    nextBtn.disabled = i === slides.length - 1;
+    Array.prototype.forEach.call(dotsWrap.children, function (d, idx) {
+      d.classList.toggle('active', idx === i);
+    });
+  }
+
+  function goTo(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    slides[i].scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    updateUI(i);
+  }
+
+  prevBtn.addEventListener('click', function () { goTo(current - 1); });
+  nextBtn.addEventListener('click', function () { goTo(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { goTo(current + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goTo(current - 1); }
+  });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+        var idx = slides.indexOf(entry.target);
+        if (idx !== -1) updateUI(idx);
+      }
+    });
+  }, { threshold: [0.55] });
+  slides.forEach(function (s) { io.observe(s); });
+
+  var SCALE_MAX = 8;
+  function fmt(v) { return '$' + Number(v).toFixed(2); }
+
+  function buildMeter(panel) {
+    var competitor = panel.dataset.competitor;
+    var brandVar = '--brand-' + (competitor || 'indep');
+    var metrics = [
+      { key: 'hot', name: 'Large Hot Coffee' },
+      { key: 'iced', name: 'Large Iced Latte' }
+    ];
+    metrics.forEach(function (m) {
+      var price = panel.dataset[m.key];
+      if (price === undefined) return;
+      var confirmed = panel.dataset[m.key + 'Confirmed'] === 'true';
+      var note = panel.dataset[m.key + 'Note'];
+      var dunkinPrice = m.key === 'hot' ? 3.50 : 5.75;
+
+      var block = document.createElement('div');
+      block.className = 'meter-block';
+
+      var label = document.createElement('div');
+      label.className = 'meter-label';
+      label.innerHTML = '<span class="metric-name">' + m.name + '</span><span>' +
+        fmt(price) + (confirmed ? '' : ' (est.)') + '</span>';
+      block.appendChild(label);
+
+      var track = document.createElement('div');
+      track.className = 'meter-track';
+      [0, 2, 4, 6, 8].forEach(function (t) {
+        var tick = document.createElement('div');
+        tick.className = 'tick';
+        tick.style.left = (t / SCALE_MAX * 100) + '%';
+        track.appendChild(tick);
+        var tl = document.createElement('div');
+        tl.className = 'tick-label';
+        tl.style.left = (t / SCALE_MAX * 100) + '%';
+        tl.textContent = '$' + t;
+        track.appendChild(tl);
+      });
+
+      var dPin = document.createElement('div');
+      dPin.className = 'pin dunkin-pin';
+      dPin.style.left = (Math.min(dunkinPrice, SCALE_MAX) / SCALE_MAX * 100) + '%';
+      var dTag = document.createElement('div');
+      dTag.className = 'pin-tag';
+      dTag.style.color = 'var(--brand-dunkin)';
+      dTag.style.left = (Math.min(dunkinPrice, SCALE_MAX) / SCALE_MAX * 100) + '%';
+      dTag.textContent = "Dunkin'";
+      track.appendChild(dPin);
+      track.appendChild(dTag);
+
+      var cPin = document.createElement('div');
+      cPin.className = 'pin';
+      cPin.style.background = 'var(' + brandVar + ')';
+      cPin.style.left = (Math.min(Number(price), SCALE_MAX) / SCALE_MAX * 100) + '%';
+      track.appendChild(cPin);
+
+      block.appendChild(track);
+
+      if (note) {
+        var noteEl = document.createElement('div');
+        noteEl.className = 'unconfirmed-note';
+        noteEl.style.marginTop = '26px';
+        noteEl.textContent = note;
+        block.appendChild(noteEl);
+      }
+
+      panel.appendChild(block);
+    });
+
+    var legend = document.createElement('div');
+    legend.className = 'price-legend';
+    legend.innerHTML =
+      '<span><span class="dot" style="background:var(' + brandVar + ')"></span>This competitor</span>' +
+      '<span><span class="dot" style="background:var(--brand-dunkin)"></span>Dunkin\' (est., extrapolated from verified medium price)</span>';
+    panel.appendChild(legend);
+
+    var extraNote = panel.dataset.note;
+    if (extraNote) {
+      var fn = document.createElement('div');
+      fn.className = 'footnote';
+      fn.textContent = extraNote;
+      panel.appendChild(fn);
+    }
+  }
+
+  document.querySelectorAll('.price-panel[data-competitor]').forEach(buildMeter);
+
+  updateUI(0);
+})();
+</script>
