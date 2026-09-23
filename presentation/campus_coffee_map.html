@@ -18,6 +18,7 @@
     --brand-dunkin: #FF6A13;
     --brand-starbucks: #00704A;
     --brand-peets: #6F2C2C;
+    --brand-connections: #5B3E8A;
     --brand-timhortons: #D52B1E;
     --brand-dutchbros: #123A57;
     --brand-mccafe: #DA291C;
@@ -394,6 +395,23 @@
     .nav-bar { gap: 10px; }
     .dots { display: none; }
   }
+
+  /* ---------- Print / PDF export ---------- */
+  @media print {
+    .nav-bar { display: none; }
+    html, body { padding: 0; margin: 0; background: var(--bg); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .deck { overflow: visible; }
+    .slide {
+      height: 100vh;
+      min-height: 0;
+      max-width: none;
+      max-height: 100vh;
+      overflow: hidden;
+      break-after: page;
+      border-bottom: none;
+    }
+    .slide:last-child { break-after: avoid; }
+  }
 </style>
 
 <div class="deck" id="deck">
@@ -409,20 +427,23 @@
       <span><strong>Location:</strong> University of Rochester, River Campus</span>
       <span><strong>Date:</strong> September 24, 2026</span>
     </div>
-    <div class="note-box">Every price in this deck is marked <strong>est.</strong> — sourced
-      from third-party menu aggregators, not a verified in-store or app price. Confirm before
-      quoting these numbers to the client. Full source list in the companion speaker notes.</div>
+    <div class="note-box">Starbucks, Peet's, and Connections Café — the three on-campus
+      incumbents — are <strong>team-verified prices</strong> (in-person, September 2026).
+      Tim Hortons, Dutch Bros, and McDonald's McCafé are marked <strong>est.</strong>,
+      sourced from third-party menu aggregators, not a verified in-store or app price. Full
+      source list in the companion speaker notes.</div>
   </section>
 
   <!-- 1: Starbucks -->
   <section class="slide" data-title="Starbucks">
-    <div class="eyebrow">Competitor 1 of 6 — Already on Campus</div>
+    <div class="eyebrow">Competitor 1 of 6 — Already on Campus · Verified</div>
     <span class="brand-chip"><span class="swatch" style="background:var(--brand-starbucks)"></span>STARBUCKS</span>
     <h2>Starbucks</h2>
     <p class="subhead">The incumbent premium anchor, already operating inside Wilson Commons.</p>
     <div class="competitor-body">
-      <div class="price-panel" data-competitor="starbucks" data-hot="3.75" data-hot-confirmed="false"
-           data-iced="5.95" data-iced-confirmed="false"></div>
+      <div class="price-panel" data-competitor="starbucks" data-hot="3.25" data-hot-confirmed="true"
+           data-iced="6.49" data-iced-confirmed="true"
+           data-iced-note="$6.05 + $0.44 tax = $6.49 total. Hot coffee: $3.25, no tax."></div>
       <div class="info-col">
         <div class="info-card">
           <h3>College presence</h3>
@@ -438,8 +459,8 @@
         </div>
         <div class="why-card">
           <h3>Why it matters for pricing</h3>
-          <p>Starbucks sets the campus price ceiling and the incumbent habit Dunkin' has to
-            interrupt.</p>
+          <p>Starbucks sets the familiar national-brand ceiling most students already
+            expect — though Connections Café, next, actually prices higher still.</p>
         </div>
       </div>
     </div>
@@ -447,13 +468,13 @@
 
   <!-- 2: Peet's -->
   <section class="slide" data-title="Peet's Coffee">
-    <div class="eyebrow">Competitor 2 of 6 — Already on Campus</div>
+    <div class="eyebrow">Competitor 2 of 6 — Already on Campus · Verified</div>
     <span class="brand-chip"><span class="swatch" style="background:var(--brand-peets)"></span>PEET'S COFFEE</span>
     <h2>Peet's Coffee</h2>
     <p class="subhead">The quieter incumbent, operating inside Wegmans Hall.</p>
     <div class="competitor-body">
-      <div class="price-panel" data-competitor="peets" data-hot="3.40" data-hot-confirmed="false"
-           data-iced="5.95" data-iced-confirmed="false"></div>
+      <div class="price-panel" data-competitor="peets" data-hot="3.50" data-hot-confirmed="true"
+           data-iced="6.00" data-iced-confirmed="true"></div>
       <div class="info-col">
         <div class="info-card">
           <h3>College presence</h3>
@@ -475,9 +496,42 @@
     </div>
   </section>
 
-  <!-- 3: Tim Hortons -->
+  <!-- 3: Connections Cafe -->
+  <section class="slide" data-title="Connections Cafe">
+    <div class="eyebrow">Competitor 3 of 6 — Already on Campus · Verified</div>
+    <span class="brand-chip"><span class="swatch" style="background:var(--brand-connections)"></span>CONNECTIONS CAFÉ</span>
+    <h2>Connections Café</h2>
+    <p class="subhead">A third on-campus option — and the most expensive of the three.</p>
+    <div class="competitor-body">
+      <div class="price-panel" data-competitor="connections" data-hot="4.00" data-hot-confirmed="true"
+           data-iced="8.00" data-iced-confirmed="true"
+           data-note="Connections Café sells only one cup size (large) — both prices are all-inclusive of tax."></div>
+      <div class="info-col">
+        <div class="info-card">
+          <h3>College presence</h3>
+          <p>Operating today on River Campus, alongside Starbucks and Peet's. Sells a single
+            cup size — large only — so there is no smaller/cheaper option to trade down to.</p>
+        </div>
+        <div class="info-card">
+          <h3>Consumer awareness &amp; perception</h3>
+          <p>Not yet researched by the team — flag this as an open item. Worth asking
+            surveyed students directly, since it lacks the national brand recognition
+            Starbucks and Dunkin' both carry.</p>
+        </div>
+        <div class="why-card">
+          <h3>Why it matters for pricing</h3>
+          <p>Connections is the most expensive on-campus incumbent by a wide margin — $8.00
+            for a large iced latte, $2 above Peet's and $1.51 above Starbucks' total. That
+            gives Dunkin' real room to undercut every on-campus option, not just match
+            Starbucks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4: Tim Hortons -->
   <section class="slide" data-title="Tim Hortons">
-    <div class="eyebrow">Competitor 3 of 6 — Dunkin's Closest National Rival</div>
+    <div class="eyebrow">Competitor 4 of 6 — Dunkin's Closest National Rival</div>
     <span class="brand-chip"><span class="swatch" style="background:var(--brand-timhortons)"></span>TIM HORTONS</span>
     <h2>Tim Hortons</h2>
     <p class="subhead">The other "everyday value" coffee chain — and a proven campus operator.</p>
@@ -505,9 +559,9 @@
     </div>
   </section>
 
-  <!-- 4: Dutch Bros -->
+  <!-- 5: Dutch Bros -->
   <section class="slide" data-title="Dutch Bros">
-    <div class="eyebrow">Competitor 4 of 6 — The Gen Z Favorite</div>
+    <div class="eyebrow">Competitor 5 of 6 — The Gen Z Favorite</div>
     <span class="brand-chip"><span class="swatch" style="background:var(--brand-dutchbros)"></span>DUTCH BROS</span>
     <h2>Dutch Bros Coffee</h2>
     <p class="subhead">Drive-thru, not dine-in — but it wins the demographic Dunkin' needs.</p>
@@ -535,9 +589,9 @@
     </div>
   </section>
 
-  <!-- 5: McCafe -->
+  <!-- 6: McCafe -->
   <section class="slide" data-title="McDonald's McCafe">
-    <div class="eyebrow">Competitor 5 of 6 — The Budget Floor</div>
+    <div class="eyebrow">Competitor 6 of 6 — The Budget Floor</div>
     <span class="brand-chip"><span class="swatch" style="background:var(--brand-mccafe)"></span>McCAFÉ</span>
     <h2>McDonald's McCafé</h2>
     <p class="subhead">The price anchor everyone already knows.</p>
@@ -562,43 +616,6 @@
           <h3>Why it matters for pricing</h3>
           <p>McCafé defines the bottom of the price range Dunkin' is competing across, even
             without being on campus.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6: Independents -->
-  <section class="slide" data-title="Independent Coffee Shops">
-    <div class="eyebrow">Competitor 6 of 6 — The Off-Campus Alternative</div>
-    <span class="brand-chip"><span class="swatch" style="background:var(--brand-indep)"></span>INDEPENDENTS</span>
-    <h2>Independent Coffee Shops Near River Campus</h2>
-    <p class="subhead">Equal Grounds · Java's · Ugly Duck Coffee · Layali Coffeehouse ·
-      Winter Swan Coffee · Albunn Coffee House · Mercury Coffee</p>
-    <div class="competitor-body">
-      <div class="price-panel">
-        <div class="info-card" style="margin:0;">
-          <h3>Pricing</h3>
-          <p><strong>Not yet field-verified.</strong> No chain menu exists to reference for
-            these shops — this is a flagged open item for the team to confirm by visit or
-            ordering app, not a figure to estimate.</p>
-        </div>
-      </div>
-      <div class="info-col">
-        <div class="info-card">
-          <h3>College presence</h3>
-          <p>Not chains, but physically embedded in the walkable off-campus neighborhood
-            immediately surrounding River Campus.</p>
-        </div>
-        <div class="info-card">
-          <h3>Consumer awareness &amp; perception</h3>
-          <p>Chosen for atmosphere and local identity — the "study spot" appeal — rather
-            than price or speed. Represent the off-campus substitute already available to
-            any student willing to walk.</p>
-        </div>
-        <div class="why-card">
-          <h3>Why it matters for pricing</h3>
-          <p>This is the real substitute Dunkin' is up against for students already living
-            off campus, not just the three on-campus incumbents.</p>
         </div>
       </div>
     </div>
