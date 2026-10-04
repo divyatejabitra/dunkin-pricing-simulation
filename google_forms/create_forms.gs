@@ -1,6 +1,8 @@
 /**
- * Creates all three Campus Coffee Preferences Survey forms (A/B/C) in your
- * Google Drive, including the screening skip-logic, in one run.
+ * Creates both Campus Coffee Pricing Study forms (order-randomized variants)
+ * in your Google Drive - Van Westendorp PSM + Gabor-Granger ladder for both
+ * large hot coffee and large iced latte, screener, behavior, purchase
+ * drivers, attention check, and demographics. Matches survey_design.md.
  *
  * HOW TO RUN:
  *   1. Go to https://script.google.com -> New project.
@@ -9,21 +11,47 @@
  *   4. The first run will ask you to authorize the script - this is normal
  *      (it needs permission to create Forms in your Drive). Approve it.
  *   5. Once it finishes, go to View > Logs (or Ctrl+Enter) to see the edit,
- *      live, and response-spreadsheet links for all three forms.
+ *      live, and response-spreadsheet links for both forms.
  *
  * If your University Google Workspace account blocks Apps Script execution,
- * use the manual per-version text files (version_A_discount.txt etc.) and
- * README.txt in this same folder instead - same questions, built by hand.
+ * use the manual per-variant text files (version_1_coffee_first.txt,
+ * version_2_latte_first.txt) and README.txt in this same folder instead -
+ * same questions, built by hand.
  *
  * ALREADY HAVE FORMS BUILT? Don't rerun this - it creates brand new forms
  * each time. Instead use addSheetsAndSharingToExistingForms() below, which
  * links response spreadsheets and shares them on forms you already made.
+ *
+ * NOTE: this replaces the earlier 3-version (A/B/C discount/match/premium)
+ * design. If you already ran the old script and have those forms live with
+ * real responses in them, don't delete them - just stop sending out their
+ * links once the new variants are ready, and keep both datasets separate.
  */
 
 // Fill in your teammates' emails before running either function. Leave the
 // array empty ([]) to skip sharing and just create the linked response
 // spreadsheets for yourself.
 var TEAMMATE_EMAILS = [];
+
+var FORM_DESCRIPTION =
+  "This short survey is part of a University of Rochester Simon Business School " +
+  "pricing study on campus coffee options. It takes about 7-8 minutes. Your " +
+  "responses are anonymous and used only in aggregate for academic purposes.";
+
+// Gabor-Granger ladder points, grounded in verified on-campus competitor
+// prices (data/macro_competitors.csv): Starbucks $3.25/$6.49, Peet's
+// $3.50/$6.00, Connections Cafe $4.00/$8.00.
+var COFFEE_LADDER = ["3.00", "3.25", "3.50", "3.75", "4.00"];
+var LATTE_LADDER = ["5.50", "6.00", "6.50", "7.00", "7.50", "8.00"];
+
+var LIKELIHOOD_SCALE = ["Very unlikely", "Unlikely", "Neutral", "Likely", "Very likely"];
+var IMPORTANCE_SCALE = [
+  "Not at all important",
+  "Slightly important",
+  "Moderately important",
+  "Very important",
+  "Extremely important",
+];
 
 /**
  * Creates the destination Spreadsheet for a form's responses, and shares
@@ -44,55 +72,192 @@ function addResponseSheetAndShare(form, label) {
   return sheet.getUrl();
 }
 
+function dollarValidation() {
+  return FormApp.createTextValidation()
+    .setHelpText("Enter a dollar amount between 0 and 15, e.g. 3.50")
+    .requireNumberBetween(0, 15)
+    .build();
+}
+
+/**
+ * Adds one product's full Price Sensitivity section (Van Westendorp's 4
+ * open-ended price questions + one Gabor-Granger purchase-likelihood grid)
+ * to the form. productName e.g. "large hot coffee"; ladderPoints e.g.
+ * COFFEE_LADDER.
+ */
+function addPricingSection(form, productName, ladderPoints) {
+  form.addPageBreakItem().setTitle("Pricing - " + productName);
+
+  form
+    .addTextItem()
+    .setTitle(
+      "At what price would a " + productName + " from an on-campus Dunkin' be so cheap " +
+        "you'd start to question its quality?"
+    )
+    .setValidation(dollarValidation())
+    .setRequired(true);
+
+  form
+    .addTextItem()
+    .setTitle(
+      "At what price would a " + productName + " from an on-campus Dunkin' be a bargain " +
+        "- a great buy for the money?"
+    )
+    .setValidation(dollarValidation())
+    .setRequired(true);
+
+  form
+    .addTextItem()
+    .setTitle(
+      "At what price would a " + productName + " from an on-campus Dunkin' start to seem " +
+        "expensive, though you'd still consider buying it?"
+    )
+    .setValidation(dollarValidation())
+    .setRequired(true);
+
+  form
+    .addTextItem()
+    .setTitle(
+      "At what price would a " + productName + " from an on-campus Dunkin' be so expensive " +
+        "you would not consider buying it?"
+    )
+    .setValidation(dollarValidation())
+    .setRequired(true);
+
+  form
+    .addGridItem()
+    .setTitle(
+      "At each price below, how likely would you be to buy a " + productName +
+        " from an on-campus Dunkin' instead of your usual option?"
+    )
+    .setRows(ladderPoints.map(function (p) { return "$" + p; }))
+    .setColumns(LIKELIHOOD_SCALE)
+    .setRequired(true);
+}
+
 function createDunkinSurveyForms() {
-  var versions = [
-    { label: "Version A", coffeePrice: "2.75", lattePrice: "5.00" },
-    { label: "Version B", coffeePrice: "3.00", lattePrice: "5.25" },
-    { label: "Version C", coffeePrice: "3.25", lattePrice: "5.50" },
+  var variants = [
+    { label: "Variant 1 (Coffee first)", coffeeFirst: true },
+    { label: "Variant 2 (Latte first)", coffeeFirst: false },
   ];
 
   var summary = [];
 
-  versions.forEach(function (v) {
-    var form = FormApp.create("Campus Coffee Preferences Survey - " + v.label);
-    form.setDescription(
-      "This short survey is part of a University of Rochester Simon Business School " +
-        "class project. Your responses are anonymous and will only be used in " +
-        "aggregate for academic purposes. It takes about 2 minutes."
-    );
+  variants.forEach(function (v) {
+    var form = FormApp.create("Campus Coffee Pricing Study - " + v.label);
+    form.setDescription(FORM_DESCRIPTION);
     form.setConfirmationMessage("Thanks for your time!");
 
-    // --- Page 1: screening Q1 ---
+    // --- Screener: Q1 ---
     var q1 = form
       .addMultipleChoiceItem()
-      .setTitle("Are you currently a student, faculty, or staff member at the University of Rochester?")
+      .setTitle(
+        "Are you currently a student, faculty, or staff member at the University of " +
+          "Rochester's River Campus?"
+      )
       .setRequired(true);
 
-    // --- Page 2: screening Q2 ---
+    // --- Screener: Q2 ---
     var page2 = form.addPageBreakItem().setTitle("One more screening question");
     var q2 = form
       .addMultipleChoiceItem()
-      .setTitle("Do you drink hot coffee or lattes at least occasionally?")
+      .setTitle("Do you drink hot coffee or iced lattes at least occasionally (roughly once a month or more)?")
       .setRequired(true);
 
-    // --- Page 3: disqualify / end early ---
+    // --- Disqualify / end early ---
     var endPage = form
       .addPageBreakItem()
       .setTitle("Thank you for your interest!")
       .setHelpText("Based on your answers, you don't qualify for this particular survey. Have a great day!")
       .setGoToPage(FormApp.PageNavigationType.SUBMIT);
 
-    // --- Page 4: About you ---
-    var mainPage = form.addPageBreakItem().setTitle("About you");
+    // --- Coffee behavior ---
+    var mainPage = form.addPageBreakItem().setTitle("Your coffee habits");
     form
       .addMultipleChoiceItem()
-      .setTitle("What is your status?")
-      .setChoiceValues(["Undergraduate student", "Graduate student", "Staff", "Faculty"])
+      .setTitle("In a typical week, how many cups of coffee or lattes (hot or iced) do you buy on or near campus?")
+      .setChoiceValues(["0", "1-2", "3-5", "6+"])
       .setRequired(true);
     form
       .addMultipleChoiceItem()
-      .setTitle("Do you live on campus or off campus?")
-      .setChoiceValues(["On campus", "Off campus"])
+      .setTitle("Where do you currently buy coffee or lattes most often?")
+      .setChoiceValues([
+        "Starbucks (Wilson Commons)",
+        "Peet's Coffee (Wegmans Hall)",
+        "Connections Cafe",
+        "An off-campus coffee shop",
+        "I make my own",
+      ])
+      .showOtherOption(true)
+      .setRequired(true);
+    form
+      .addTextItem()
+      .setTitle("What do you typically spend on a large hot coffee, when you buy one?")
+      .setHelpText("Enter a dollar amount (e.g. 3.25), or type N/A if you don't buy this.")
+      .setRequired(true);
+    form
+      .addTextItem()
+      .setTitle("What do you typically spend on a large iced latte, when you buy one?")
+      .setHelpText("Enter a dollar amount (e.g. 6.00), or type N/A if you don't buy this.")
+      .setRequired(true);
+    form
+      .addMultipleChoiceItem()
+      .setTitle("Which do you buy more often - hot coffee or iced lattes?")
+      .setChoiceValues(["Mostly hot coffee", "Mostly iced lattes", "About equally", "Neither"])
+      .setRequired(true);
+
+    // --- Price sensitivity sections, order depends on variant ---
+    if (v.coffeeFirst) {
+      addPricingSection(form, "large hot coffee", COFFEE_LADDER);
+      addPricingSection(form, "large iced latte", LATTE_LADDER);
+    } else {
+      addPricingSection(form, "large iced latte", LATTE_LADDER);
+      addPricingSection(form, "large hot coffee", COFFEE_LADDER);
+    }
+
+    // --- Purchase drivers ---
+    form.addPageBreakItem().setTitle("What matters to you");
+    form
+      .addGridItem()
+      .setTitle("How important is each of the following when you decide where to buy coffee on campus?")
+      .setRows(["Price", "Taste", "Convenience (location & speed)", "Brand reputation", "Accepts my dining dollars or meal plan"])
+      .setColumns(IMPORTANCE_SCALE)
+      .setRequired(true);
+
+    // --- Payment-parity scenario: added after the 9/24 presentation confirmed (per UR
+    // Dining's own FAQ) that Starbucks, Peet's, and Connections Cafe all already accept
+    // Dining Dollars, making this a concrete structural risk rather than a hypothetical.
+    form
+      .addScaleItem()
+      .setTitle(
+        "University Dining Dollars currently work at Starbucks, Peet's, and Connections " +
+          "Cafe on campus. If an on-campus Dunkin' did NOT accept Dining Dollars or " +
+          "meal-plan swipes (cash/card only), how would that affect your likelihood of " +
+          "buying there?"
+      )
+      .setBounds(1, 5)
+      .setLabels("Much less likely", "No change")
+      .setRequired(true);
+
+    // --- Attention check ---
+    form.addPageBreakItem().setTitle("Almost done");
+    form
+      .addMultipleChoiceItem()
+      .setTitle("To show you're reading carefully, please select \"Somewhat agree\" for this question.")
+      .setChoiceValues(["Strongly disagree", "Disagree", "Neither agree nor disagree", "Somewhat agree", "Strongly agree"])
+      .setRequired(true);
+
+    // --- Demographics (last) ---
+    form.addPageBreakItem().setTitle("A few last questions about you");
+    form
+      .addMultipleChoiceItem()
+      .setTitle("What is your age?")
+      .setChoiceValues(["Under 18", "18-20", "21-23", "24-26", "27+"])
+      .setRequired(true);
+    form
+      .addMultipleChoiceItem()
+      .setTitle("What is your status at the University?")
+      .setChoiceValues(["Undergraduate student", "Graduate student", "Staff", "Faculty"])
       .setRequired(true);
     form
       .addMultipleChoiceItem()
@@ -101,84 +266,21 @@ function createDunkinSurveyForms() {
       .setRequired(true);
     form
       .addMultipleChoiceItem()
-      .setTitle("In a typical week, how often do you buy coffee or a latte on or near campus?")
-      .setChoiceValues(["0 times", "1-2 times", "3-5 times", "6+ times"])
+      .setTitle("Which range best describes your typical monthly discretionary (non-essential) spending?")
+      .setChoiceValues(["$0-$50", "$51-$100", "$101-$200", "$201+", "Prefer not to say"])
       .setRequired(true);
     form
       .addMultipleChoiceItem()
-      .setTitle("Which of the following do you currently buy coffee from most often?")
-      .setChoiceValues([
-        "Starbucks - Wilson Commons",
-        "Peet's Coffee - Wegmans Hall",
-        "Brew",
-        "An off-campus coffee shop",
-        "I make my own",
-      ])
+      .setTitle("What is your gender?")
+      .setChoiceValues(["Man", "Woman", "Non-binary", "Prefer not to say"])
       .showOtherOption(true)
-      .setRequired(true);
-
-    // --- Page 5: Dunkin' brand awareness ---
-    form.addPageBreakItem().setTitle("Dunkin' brand awareness");
-    form
-      .addScaleItem()
-      .setTitle("How familiar are you with Dunkin' as a brand?")
-      .setBounds(1, 5)
-      .setLabels("Not at all familiar", "Extremely familiar")
-      .setRequired(true);
-    form
-      .addScaleItem()
-      .setTitle("If Dunkin' opened a location on River Campus, how interested would you be in trying it?")
-      .setBounds(1, 5)
-      .setLabels("Not at all interested", "Extremely interested")
-      .setRequired(true);
-
-    // --- Page 6: pricing (version-specific) ---
-    form.addPageBreakItem().setTitle("Pricing");
-    form
-      .addScaleItem()
-      .setTitle(
-        "If Dunkin' opened on campus and sold a medium hot coffee for $" +
-          v.coffeePrice +
-          ", how likely would you be to purchase it instead of your usual coffee?"
-      )
-      .setBounds(1, 5)
-      .setLabels("Very unlikely", "Very likely")
-      .setRequired(true);
-    form
-      .addScaleItem()
-      .setTitle(
-        "If Dunkin' opened on campus and sold a medium hot latte for $" +
-          v.lattePrice +
-          ", how likely would you be to purchase it instead of your usual latte?"
-      )
-      .setBounds(1, 5)
-      .setLabels("Very unlikely", "Very likely")
-      .setRequired(true);
-
-    // --- Page 7: payment method ---
-    form.addPageBreakItem().setTitle("Payment method");
-    form
-      .addScaleItem()
-      .setTitle(
-        "If Dunkin' did NOT accept University dining dollars or meal-plan swipes (cash/card only), " +
-          "how would that affect your likelihood of buying there?"
-      )
-      .setBounds(1, 5)
-      .setLabels("Much less likely", "No change")
-      .setRequired(true);
-
-    // --- Page 8: open-ended (optional) ---
-    form.addPageBreakItem().setTitle("Last question");
-    form
-      .addParagraphTextItem()
-      .setTitle("What, if anything, would make you choose Dunkin' over Starbucks, Peet's, or Brew on campus?")
       .setRequired(false);
 
     // --- Wire up the screening branching now that all target pages exist ---
     q1.setChoices([q1.createChoice("Yes", page2), q1.createChoice("No", endPage)]);
     q2.setChoices([q2.createChoice("Yes", mainPage), q2.createChoice("No", endPage)]);
 
-    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Survey - " + v.label);
+    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Pricing - " + v.label);
 
     summary.push(
       v.label + ": edit " + form.getEditUrl() + " | live " + form.getPublishedUrl() + " | responses " + sheetUrl
@@ -193,23 +295,22 @@ function createDunkinSurveyForms() {
  * by hand) to add a linked response spreadsheet and share it with
  * TEAMMATE_EMAILS, without creating any duplicate forms.
  *
- * Fill in the three form IDs below - it's the part of the edit URL between
+ * Fill in the two form IDs below - it's the part of the edit URL between
  * "/forms/d/" and "/edit", e.g. for
  * https://docs.google.com/forms/d/11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4/edit
  * the ID is 11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4
  */
 function addSheetsAndSharingToExistingForms() {
   var existingForms = [
-    { label: "Version A", formId: "11LmUbNrMnJIrSyFnoVHOoWzK3jmOI2aOS_x2B1E3at4" },
-    { label: "Version B", formId: "1H78KLGZ8TuTdYPrVVnxe44Ky52WM78wImiMJSuilvV4" },
-    { label: "Version C", formId: "1iH-VpbkPrQNUSzA2C5qmnsih52g9Hy4a36RsHYKkBSE" },
+    { label: "Variant 1 (Coffee first)", formId: "PASTE_VARIANT_1_FORM_ID_HERE" },
+    { label: "Variant 2 (Latte first)", formId: "PASTE_VARIANT_2_FORM_ID_HERE" },
   ];
 
   var summary = [];
 
   existingForms.forEach(function (f) {
     var form = FormApp.openById(f.formId);
-    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Survey - " + f.label);
+    var sheetUrl = addResponseSheetAndShare(form, "Campus Coffee Pricing - " + f.label);
     summary.push(f.label + ": responses " + sheetUrl);
   });
 

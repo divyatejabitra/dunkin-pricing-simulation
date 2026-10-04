@@ -1,0 +1,202 @@
+====================================================================
+GOOGLE FORM - VARIANT 1 (Hot Coffee priced before Iced Latte)
+Give this version to odd-numbered respondents (#1, #3, #5, #7, #9) that
+each surveyor talks to - alternates with Variant 2 to randomize which
+product gets priced first and reduce anchoring.
+====================================================================
+
+FORM TITLE:
+Campus Coffee Pricing Study
+
+FORM DESCRIPTION:
+This short survey is part of a University of Rochester Simon Business School
+pricing study on campus coffee options. It takes about 7-8 minutes. Your
+responses are anonymous and used only in aggregate for academic purposes.
+
+--------------------------------------------------------------------
+SECTION 1 - Screening
+--------------------------------------------------------------------
+
+Q1 [Multiple choice, required]
+Are you currently a student, faculty, or staff member at the University of
+Rochester's River Campus?
+( ) Yes
+( ) No
+
+>> Forms setup: set this question's response validation to "Go to section
+   based on answer" - route "No" to a final "Thank you" section that ends
+   the form immediately.
+
+Q2 [Multiple choice, required]
+Do you drink hot coffee or iced lattes at least occasionally (roughly once
+a month or more)?
+( ) Yes
+( ) No
+
+>> Forms setup: same as above - route "No" to end the form immediately.
+
+--------------------------------------------------------------------
+SECTION 2 - Your coffee habits
+--------------------------------------------------------------------
+
+Q3 [Multiple choice, required]
+In a typical week, how many cups of coffee or lattes (hot or iced) do you
+buy on or near campus?
+( ) 0
+( ) 1-2
+( ) 3-5
+( ) 6+
+
+Q4 [Multiple choice, required]
+Where do you currently buy coffee or lattes most often?
+( ) Starbucks (Wilson Commons)
+( ) Peet's Coffee (Wegmans Hall)
+( ) Connections Cafe
+( ) An off-campus coffee shop
+( ) I make my own
+( ) Other: ______
+
+Q5 [Short answer, required]
+What do you typically spend on a large hot coffee, when you buy one?
+(Enter a dollar amount, e.g. 3.25, or type N/A if you don't buy this.)
+
+Q6 [Short answer, required]
+What do you typically spend on a large iced latte, when you buy one?
+(Enter a dollar amount, e.g. 6.00, or type N/A if you don't buy this.)
+
+Q7 [Multiple choice, required]
+Which do you buy more often - hot coffee or iced lattes?
+( ) Mostly hot coffee
+( ) Mostly iced lattes
+( ) About equally
+( ) Neither
+
+--------------------------------------------------------------------
+SECTION 3 - Pricing: large hot coffee (THIS SECTION IS FIRST IN VARIANT 1)
+--------------------------------------------------------------------
+
+Q8 [Short answer, required - numeric validation $0-$15]
+At what price would a large hot coffee from an on-campus Dunkin' be so
+cheap you'd start to question its quality?
+
+Q9 [Short answer, required - numeric validation $0-$15]
+At what price would a large hot coffee from an on-campus Dunkin' be a
+bargain - a great buy for the money?
+
+Q10 [Short answer, required - numeric validation $0-$15]
+At what price would a large hot coffee from an on-campus Dunkin' start to
+seem expensive, though you'd still consider buying it?
+
+Q11 [Short answer, required - numeric validation $0-$15]
+At what price would a large hot coffee from an on-campus Dunkin' be so
+expensive you would not consider buying it?
+
+Q12 [Multiple choice grid, required]
+At each price below, how likely would you be to buy a large hot coffee
+from an on-campus Dunkin' instead of your usual option?
+Rows: $3.00 / $3.25 / $3.50 / $3.75 / $4.00
+Columns: Very unlikely / Unlikely / Neutral / Likely / Very likely
+
+--------------------------------------------------------------------
+SECTION 4 - Pricing: large iced latte
+--------------------------------------------------------------------
+
+Q13 [Short answer, required - numeric validation $0-$15]
+At what price would a large iced latte from an on-campus Dunkin' be so
+cheap you'd start to question its quality?
+
+Q14 [Short answer, required - numeric validation $0-$15]
+At what price would a large iced latte from an on-campus Dunkin' be a
+bargain - a great buy for the money?
+
+Q15 [Short answer, required - numeric validation $0-$15]
+At what price would a large iced latte from an on-campus Dunkin' start to
+seem expensive, though you'd still consider buying it?
+
+Q16 [Short answer, required - numeric validation $0-$15]
+At what price would a large iced latte from an on-campus Dunkin' be so
+expensive you would not consider buying it?
+
+Q17 [Multiple choice grid, required]
+At each price below, how likely would you be to buy a large iced latte
+from an on-campus Dunkin' instead of your usual option?
+Rows: $5.50 / $6.00 / $6.50 / $7.00 / $7.50 / $8.00
+Columns: Very unlikely / Unlikely / Neutral / Likely / Very likely
+
+--------------------------------------------------------------------
+SECTION 5 - What matters to you
+--------------------------------------------------------------------
+
+Q18 [Multiple choice grid, required]
+How important is each of the following when you decide where to buy
+coffee on campus?
+Rows: Price / Taste / Convenience (location & speed) / Brand reputation /
+Accepts my dining dollars or meal plan
+Columns: Not at all important / Slightly important / Moderately important /
+Very important / Extremely important
+
+Q19 [Linear scale 1-5, required]
+University Dining Dollars currently work at Starbucks, Peet's, and
+Connections Cafe on campus. If an on-campus Dunkin' did NOT accept Dining
+Dollars or meal-plan swipes (cash/card only), how would that affect your
+likelihood of buying there?
+1 = Much less likely ... 5 = No change
+
+--------------------------------------------------------------------
+SECTION 6 - Almost done
+--------------------------------------------------------------------
+
+Q20 [Multiple choice, required]
+To show you're reading carefully, please select "Somewhat agree" for this
+question.
+( ) Strongly disagree
+( ) Disagree
+( ) Neither agree nor disagree
+( ) Somewhat agree
+( ) Strongly agree
+
+--------------------------------------------------------------------
+SECTION 7 - A few last questions about you
+--------------------------------------------------------------------
+
+Q21 [Multiple choice, required]
+What is your age?
+( ) Under 18
+( ) 18-20
+( ) 21-23
+( ) 24-26
+( ) 27+
+
+Q22 [Multiple choice, required]
+What is your status at the University?
+( ) Undergraduate student
+( ) Graduate student
+( ) Staff
+( ) Faculty
+
+Q23 [Multiple choice, required]
+Do you have a University dining plan or dining dollars?
+( ) Yes
+( ) No
+
+Q24 [Multiple choice, required]
+Which range best describes your typical monthly discretionary
+(non-essential) spending?
+( ) $0-$50
+( ) $51-$100
+( ) $101-$200
+( ) $201+
+( ) Prefer not to say
+
+Q25 [Multiple choice, optional]
+What is your gender?
+( ) Man
+( ) Woman
+( ) Non-binary
+( ) Prefer not to say
+( ) Other: ______
+
+--------------------------------------------------------------------
+END SECTION
+--------------------------------------------------------------------
+Thank you for your time!
