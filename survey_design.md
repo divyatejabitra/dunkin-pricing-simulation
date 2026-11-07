@@ -4,6 +4,15 @@ Proposed questionnaire for the MKT465 Dunkin' capstone's 10/8 survey-design revi
 8 slides, staggered team meetings with professors). Supersedes the earlier single-price-point
 draft — see `git show 15cda3b:survey_design.md` to recover that version if needed.
 
+> **Status update:** the unified questionnaire actually distributed to all teams after 10/8
+> (via Qualtrics, not the Google Forms built here) simplified this proposal — 3 Gabor-Granger
+> price points per product instead of 5–6, demographics moved to the front, and no Van
+> Westendorp questions in the pooled data received back. The methodology and price-ladder
+> reasoning below is still what this team proposed and defended; it is not what was fielded.
+> **See [Final Pricing Recommendation](#final-pricing-recommendation-1112-check-in) at the
+> bottom of this document for the actual result, based on the real fielded survey's pooled
+> data.**
+
 ## Assumptions made instead of asking (per instructions — flag, don't block)
 
 | # | Assumption | Why |
@@ -189,3 +198,44 @@ the payment-friction risk this project has flagged since the competitive-landsca
    mitigation is comparing Q5/Q6's stated *current* spending against the hypothetical
    answers for internal consistency, and treating the output as a *relative* ranking of
    price points and segments rather than a precise revenue forecast.
+
+## Final Pricing Recommendation (11/12 Check-In)
+
+Based on the real pooled data from the fielded Qualtrics survey (324 raw responses, cleaned
+to a 210-person core UR-affiliated sample per `clean_survey_data.py` — see `excluded.csv`
+for every dropped respondent and why) and the price-point analysis in `analyze_survey.py`
+(full detail in `presentation/Dunkin_Pricing_Analysis_Detailed.pptx`):
+
+| Product | Recommended launch price | Tested range |
+|---|---|---|
+| Large Hot Coffee (20oz) | **$3.49** | $3.29 – $3.69 |
+| Large Iced Latte (32oz) | **$5.59** | $5.29 – $5.89 |
+
+Both are the **middle** of the fielded survey's tested range, not the price-point the raw
+revenue math alone favors. Reasoning:
+
+- Revenue (price × converted purchase probability, using a conversion scheme following
+  Jamieson & Bass (1989), *Journal of Marketing Research* 26(3)) was highest at the lowest
+  tested price for every segment and both products — but since only 3 close-together prices
+  were tested, this only shows the true optimum is *at or below* the floor, not that the
+  floor *is* the optimum. Treating $3.29/$5.29 as proven-optimal would overstate the data's
+  precision.
+- A real, operating comparable — Stony Brook University's campus Dunkin' Express, confirmed
+  via an in-person menu photo, with working Dining Dollars integration — charges $3.68 for
+  the same large hot coffee: almost exactly the *top* of the tested range, not the bottom.
+  That's independent evidence that real in-store demand may be less price-elastic than the
+  survey alone suggests.
+- The middle price point keeps most of the volume advantage of pricing low while preserving
+  real margin, and lands within a range a genuine comparable already serves profitably.
+
+**Price discrimination:** segment analysis found undergraduates and Dining Dollars/meal-plan
+holders show the *highest* purchase probability at every tested price for both products —
+not the lowest — which argues against a blanket student or dining-plan discount (it would
+discount the customers already most willing to buy at full price). The stronger lever is
+prioritizing Dining Dollars integration operationally (proven feasible at Stony Brook) over
+any price cut; if a promotion is wanted at all, it should target graduate students and
+non-dining-plan holders instead, per standard price-discrimination logic.
+
+This is a volume-vs-margin judgment call informed by imperfect survey data, not a
+statistically certain optimum — worth revisiting with real sales data after a soft launch,
+consistent with the stated-intent limitation flagged throughout this document.
