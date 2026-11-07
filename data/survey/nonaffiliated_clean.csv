@@ -1,0 +1,40 @@
+gender,role,meal_plan,meal_plan_importance,latte_5.29,latte_5.59,latte_5.89,coffee_3.29,coffee_3.49,coffee_3.69,respondent_id,latte_max_increase,coffee_max_increase,severe_nonmonotonic,flatlined_all_six,not_ur_affiliated
+Female,Not affiliated with the University of Rochester,No,,5,4,3,5,5,4,4,-1,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Important,4,3,2,4,3,2,6,-1,-1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,2,2,4,4,3,7,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,2,1,4,4,4,28,-1,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,2,2,2,1,1,1,38,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,3,3,3,2,3,3,40,0,1,False,False,True
+Male,Not affiliated with the University of Rochester,Yes,Important,3,3,3,4,4,4,60,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,1,1,1,3,3,3,61,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,2,2,2,3,3,3,63,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Very Important,3,2,2,5,3,4,69,0,1,False,False,True
+Male,Not affiliated with the University of Rochester,No,,3,3,3,4,4,3,70,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,5,5,4,3,4,5,78,0,1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,3,3,2,2,1,90,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,2,2,3,3,2,92,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,4,3,2,4,3,2,93,-1,-1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,3,2,2,2,2,113,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,4,4,4,2,2,2,115,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,4,4,4,2,2,2,118,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,5,4,4,4,5,3,126,0,1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,5,2,1,5,5,1,127,-1,0,False,False,True
+Male,Not affiliated with the University of Rochester,Yes,Very Important,3,3,2,4,3,3,132,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,1,1,1,4,4,2,146,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Important,4,3,2,5,4,4,147,-1,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,2,2,2,3,3,3,151,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,2,2,2,3,3,3,158,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Neutral,1,1,1,4,4,4,160,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Neutral,1,1,1,3,3,3,162,0,0,False,False,True
+Male,Not affiliated with the University of Rochester,No,,4,3,2,4,3,3,165,-1,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,3,2,4,3,2,175,0,-1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,2,1,4,4,3,179,-1,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,3,3,4,4,4,215,0,0,False,False,True
+Prefer not to say,Not affiliated with the University of Rochester,No,,3,3,2,5,5,4,218,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,3,2,3,3,2,243,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,3,2,2,4,3,2,295,0,-1,False,False,True
+Female,Not affiliated with the University of Rochester,No,,5,4,3,5,4,4,305,-1,0,False,False,True
+Female,Not affiliated with the University of Rochester,Yes,Important,4,3,1,4,4,5,308,-1,1,False,False,True
+Male,Not affiliated with the University of Rochester,No,,3,3,2,4,4,3,309,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,5,5,3,4,4,3,312,0,0,False,False,True
+Female,Not affiliated with the University of Rochester,No,,1,1,1,3,3,1,323,0,0,False,False,True

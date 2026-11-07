@@ -1,0 +1,473 @@
+{
+  "cleaning": {
+    "n_raw": 324,
+    "n_flatlined": 62,
+    "n_severe_nonmono": 13,
+    "n_excluded_total": 75,
+    "n_core": 210,
+    "n_comparison_nonaffiliated": 39
+  },
+  "hot_coffee": {
+    "overall": [
+      {
+        "price": 3.29,
+        "mean_1to5": 3.9,
+        "mean_probability": 0.331,
+        "pct_likely_or_very_likely": 0.738,
+        "revenue_index": 1.0882
+      },
+      {
+        "price": 3.49,
+        "mean_1to5": 3.24,
+        "mean_probability": 0.22,
+        "pct_likely_or_very_likely": 0.424,
+        "revenue_index": 0.7671
+      },
+      {
+        "price": 3.69,
+        "mean_1to5": 2.79,
+        "mean_probability": 0.167,
+        "pct_likely_or_very_likely": 0.314,
+        "revenue_index": 0.6175
+      }
+    ],
+    "by_dining_plan": {
+      "No": [
+        {
+          "price": 3.29,
+          "mean_1to5": 3.81,
+          "mean_probability": 0.309,
+          "revenue_index": 1.0172
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.09,
+          "mean_probability": 0.192,
+          "revenue_index": 0.6718
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 2.63,
+          "mean_probability": 0.149,
+          "revenue_index": 0.55
+        }
+      ],
+      "Yes": [
+        {
+          "price": 3.29,
+          "mean_1to5": 4.13,
+          "mean_probability": 0.382,
+          "revenue_index": 1.2576
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.6,
+          "mean_probability": 0.285,
+          "revenue_index": 0.9947
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 3.18,
+          "mean_probability": 0.211,
+          "revenue_index": 0.7785
+        }
+      ]
+    },
+    "by_student_status": {
+      "Grad": [
+        {
+          "price": 3.29,
+          "mean_1to5": 3.88,
+          "mean_probability": 0.322,
+          "revenue_index": 1.0609
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.11,
+          "mean_probability": 0.202,
+          "revenue_index": 0.7063
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 2.64,
+          "mean_probability": 0.159,
+          "revenue_index": 0.5879
+        }
+      ],
+      "Undergrad": [
+        {
+          "price": 3.29,
+          "mean_1to5": 4.0,
+          "mean_probability": 0.359,
+          "revenue_index": 1.1795
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.53,
+          "mean_probability": 0.266,
+          "revenue_index": 0.9297
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 3.21,
+          "mean_probability": 0.2,
+          "revenue_index": 0.7372
+        }
+      ]
+    },
+    "by_gender": {
+      "Female": [
+        {
+          "price": 3.29,
+          "mean_1to5": 4.0,
+          "mean_probability": 0.368,
+          "revenue_index": 1.2101
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.3,
+          "mean_probability": 0.232,
+          "revenue_index": 0.8101
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 2.78,
+          "mean_probability": 0.174,
+          "revenue_index": 0.6425
+        }
+      ],
+      "Male": [
+        {
+          "price": 3.29,
+          "mean_1to5": 3.82,
+          "mean_probability": 0.297,
+          "revenue_index": 0.9757
+        },
+        {
+          "price": 3.49,
+          "mean_1to5": 3.18,
+          "mean_probability": 0.211,
+          "revenue_index": 0.7365
+        },
+        {
+          "price": 3.69,
+          "mean_1to5": 2.78,
+          "mean_probability": 0.161,
+          "revenue_index": 0.5923
+        }
+      ]
+    }
+  },
+  "iced_latte": {
+    "overall": [
+      {
+        "price": 5.29,
+        "mean_1to5": 3.51,
+        "mean_probability": 0.278,
+        "pct_likely_or_very_likely": 0.562,
+        "revenue_index": 1.4691
+      },
+      {
+        "price": 5.59,
+        "mean_1to5": 2.96,
+        "mean_probability": 0.181,
+        "pct_likely_or_very_likely": 0.357,
+        "revenue_index": 1.0121
+      },
+      {
+        "price": 5.89,
+        "mean_1to5": 2.45,
+        "mean_probability": 0.122,
+        "pct_likely_or_very_likely": 0.19,
+        "revenue_index": 0.7203
+      }
+    ],
+    "by_dining_plan": {
+      "No": [
+        {
+          "price": 5.29,
+          "mean_1to5": 3.27,
+          "mean_probability": 0.231,
+          "revenue_index": 1.2242
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 2.7,
+          "mean_probability": 0.148,
+          "revenue_index": 0.8279
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.22,
+          "mean_probability": 0.106,
+          "revenue_index": 0.626
+        }
+      ],
+      "Yes": [
+        {
+          "price": 5.29,
+          "mean_1to5": 4.1,
+          "mean_probability": 0.388,
+          "revenue_index": 2.0537
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 3.58,
+          "mean_probability": 0.26,
+          "revenue_index": 1.4516
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.98,
+          "mean_probability": 0.16,
+          "revenue_index": 0.9452
+        }
+      ]
+    },
+    "by_student_status": {
+      "Grad": [
+        {
+          "price": 5.29,
+          "mean_1to5": 3.38,
+          "mean_probability": 0.248,
+          "revenue_index": 1.3114
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 2.78,
+          "mean_probability": 0.157,
+          "revenue_index": 0.8802
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.25,
+          "mean_probability": 0.107,
+          "revenue_index": 0.6312
+        }
+      ],
+      "Undergrad": [
+        {
+          "price": 5.29,
+          "mean_1to5": 3.94,
+          "mean_probability": 0.385,
+          "revenue_index": 2.0383
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 3.53,
+          "mean_probability": 0.261,
+          "revenue_index": 1.4617
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.94,
+          "mean_probability": 0.157,
+          "revenue_index": 0.9249
+        }
+      ]
+    },
+    "by_gender": {
+      "Female": [
+        {
+          "price": 5.29,
+          "mean_1to5": 3.67,
+          "mean_probability": 0.313,
+          "revenue_index": 1.6535
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 3.05,
+          "mean_probability": 0.197,
+          "revenue_index": 1.0985
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.39,
+          "mean_probability": 0.108,
+          "revenue_index": 0.6344
+        }
+      ],
+      "Male": [
+        {
+          "price": 5.29,
+          "mean_1to5": 3.34,
+          "mean_probability": 0.238,
+          "revenue_index": 1.2608
+        },
+        {
+          "price": 5.59,
+          "mean_1to5": 2.83,
+          "mean_probability": 0.16,
+          "revenue_index": 0.8938
+        },
+        {
+          "price": 5.89,
+          "mean_1to5": 2.46,
+          "mean_probability": 0.132,
+          "revenue_index": 0.7786
+        }
+      ]
+    }
+  },
+  "revenue_maximizing": [
+    {
+      "segment": "comparison",
+      "segment_value": "Not UR-affiliated",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.261,
+      "revenue_index": 0.8579
+    },
+    {
+      "segment": "dining_plan",
+      "segment_value": "No",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.309,
+      "revenue_index": 1.0172
+    },
+    {
+      "segment": "dining_plan",
+      "segment_value": "Yes",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.382,
+      "revenue_index": 1.2576
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Female",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.368,
+      "revenue_index": 1.2101
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Male",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.297,
+      "revenue_index": 0.9757
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Prefer not to say",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.18,
+      "revenue_index": 0.5922
+    },
+    {
+      "segment": "overall",
+      "segment_value": "UR-affiliated (core sample)",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.331,
+      "revenue_index": 1.0882
+    },
+    {
+      "segment": "student_status",
+      "segment_value": "Grad",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.322,
+      "revenue_index": 1.0609
+    },
+    {
+      "segment": "student_status",
+      "segment_value": "Undergrad",
+      "product": "Hot Coffee",
+      "revenue_maximizing_price": 3.29,
+      "mean_probability": 0.359,
+      "revenue_index": 1.1795
+    },
+    {
+      "segment": "comparison",
+      "segment_value": "Not UR-affiliated",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.212,
+      "revenue_index": 1.119
+    },
+    {
+      "segment": "dining_plan",
+      "segment_value": "No",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.231,
+      "revenue_index": 1.2242
+    },
+    {
+      "segment": "dining_plan",
+      "segment_value": "Yes",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.388,
+      "revenue_index": 2.0537
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Female",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.313,
+      "revenue_index": 1.6535
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Male",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.238,
+      "revenue_index": 1.2608
+    },
+    {
+      "segment": "gender",
+      "segment_value": "Prefer not to say",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.89,
+      "mean_probability": 0.25,
+      "revenue_index": 1.4725
+    },
+    {
+      "segment": "overall",
+      "segment_value": "UR-affiliated (core sample)",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.278,
+      "revenue_index": 1.4691
+    },
+    {
+      "segment": "student_status",
+      "segment_value": "Grad",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.248,
+      "revenue_index": 1.3114
+    },
+    {
+      "segment": "student_status",
+      "segment_value": "Undergrad",
+      "product": "Iced Latte",
+      "revenue_maximizing_price": 5.29,
+      "mean_probability": 0.385,
+      "revenue_index": 2.0383
+    }
+  ],
+  "stony_brook": {
+    "hot_coffee_large_20oz": 3.68,
+    "iced_latte_direct_match": null,
+    "iced_latte_closest_comparables": [
+      {
+        "item": "Iced Chai Latte (L)",
+        "price": 5.49
+      },
+      {
+        "item": "Cold Brew (L)",
+        "price": 5.49
+      }
+    ],
+    "note": "Dunkin' Express at Stony Brook - confirmed live, working Dining Dollars integration"
+  }
+}

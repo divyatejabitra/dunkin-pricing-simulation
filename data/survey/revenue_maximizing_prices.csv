@@ -1,0 +1,19 @@
+segment,segment_value,product,revenue_maximizing_price,mean_probability,revenue_index
+comparison,Not UR-affiliated,Hot Coffee,3.29,0.261,0.8579
+dining_plan,No,Hot Coffee,3.29,0.309,1.0172
+dining_plan,Yes,Hot Coffee,3.29,0.382,1.2576
+gender,Female,Hot Coffee,3.29,0.368,1.2101
+gender,Male,Hot Coffee,3.29,0.297,0.9757
+gender,Prefer not to say,Hot Coffee,3.29,0.18,0.5922
+overall,UR-affiliated (core sample),Hot Coffee,3.29,0.331,1.0882
+student_status,Grad,Hot Coffee,3.29,0.322,1.0609
+student_status,Undergrad,Hot Coffee,3.29,0.359,1.1795
+comparison,Not UR-affiliated,Iced Latte,5.29,0.212,1.119
+dining_plan,No,Iced Latte,5.29,0.231,1.2242
+dining_plan,Yes,Iced Latte,5.29,0.388,2.0537
+gender,Female,Iced Latte,5.29,0.313,1.6535
+gender,Male,Iced Latte,5.29,0.238,1.2608
+gender,Prefer not to say,Iced Latte,5.89,0.25,1.4725
+overall,UR-affiliated (core sample),Iced Latte,5.29,0.278,1.4691
+student_status,Grad,Iced Latte,5.29,0.248,1.3114
+student_status,Undergrad,Iced Latte,5.29,0.385,2.0383
