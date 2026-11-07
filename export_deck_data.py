@@ -20,6 +20,8 @@ def main() -> None:
     excluded = pd.read_csv(DATA_DIR / "excluded.csv")
     summary = pd.read_csv(DATA_DIR / "price_point_summary.csv")
     best = revenue_maximizing_prices(summary)
+    significance = json.loads((DATA_DIR / "significance_tests.json").read_text())
+    regression = json.loads((DATA_DIR / "regression_results.json").read_text())
 
     raw_n = len(core) + len(nonaff) + len(excluded)
 
@@ -56,6 +58,8 @@ def main() -> None:
             "by_gender": {k: v for k, v in product_segment("Iced Latte", "gender").items() if k != "Prefer not to say"},
         },
         "revenue_maximizing": best.to_dict("records"),
+        "significance": significance,
+        "regression": regression,
         "stony_brook": {
             "hot_coffee_large_20oz": 3.68,
             "iced_latte_direct_match": None,

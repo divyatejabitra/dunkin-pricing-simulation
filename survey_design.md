@@ -228,13 +228,26 @@ revenue math alone favors. Reasoning:
 - The middle price point keeps most of the volume advantage of pricing low while preserving
   real margin, and lands within a range a genuine comparable already serves profitably.
 
-**Price discrimination:** segment analysis found undergraduates and Dining Dollars/meal-plan
-holders show the *highest* purchase probability at every tested price for both products —
-not the lowest — which argues against a blanket student or dining-plan discount (it would
-discount the customers already most willing to buy at full price). The stronger lever is
-prioritizing Dining Dollars integration operationally (proven feasible at Stony Brook) over
-any price cut; if a promotion is wanted at all, it should target graduate students and
-non-dining-plan holders instead, per standard price-discrimination logic.
+**Statistical validation** (`statistical_tests.py`, full detail in both decks): a Friedman
+test confirms the three tested prices are genuinely different for both products (p<0.0001,
+every pairwise comparison significant after Bonferroni correction) — the demand curve isn't
+sampling noise. A regression of purchase probability on price and segment dummies, with
+standard errors clustered by respondent (each of the 210 respondents contributes 3
+observations per product, so they aren't independent), estimates that every $0.10 price
+increase costs ~4.1 points of purchase probability for hot coffee and ~2.6 points for iced
+latte (both p<0.001) — hot coffee demand is more price-sensitive per dollar.
+
+**Price discrimination:** the regression also found that once dining-plan status and class
+year share one model, dining-plan status remains a real, independent predictor of purchase
+probability (p=0.015 latte, p=0.068 coffee), but the undergrad effect loses all significance
+(p=0.93 coffee, p=0.30 latte) — the descriptive "undergrads buy more" finding was mostly a
+confound, explained by undergrads being more likely to hold a dining plan, not an independent
+class-year effect. Dining Dollars/meal-plan holders show the *highest* purchase probability
+at every tested price for both products, which argues against a blanket dining-plan discount
+(it would discount the customers already most willing to buy at full price). The stronger
+lever is prioritizing Dining Dollars integration operationally (proven feasible at Stony
+Brook) over any price cut; if a promotion is wanted at all, standard price-discrimination
+logic points it at non-dining-plan holders specifically, not undergrads as a class.
 
 This is a volume-vs-margin judgment call informed by imperfect survey data, not a
 statistically certain optimum — worth revisiting with real sales data after a soft launch,

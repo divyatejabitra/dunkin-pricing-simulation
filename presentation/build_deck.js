@@ -329,6 +329,98 @@ addSegmentSlide(
   slide.addTable(styledTable(latteRows), { x: 6.9, y: 4.5, w: 5.85, h: 1.8, colW: [1.95, 1.95, 1.95], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
 }
 
+// ---------- Statistical significance ----------
+{
+  const slide = addContentSlide("Are These Differences Statistically Significant?", "Friedman tests across prices, Mann-Whitney tests across segments");
+
+  const products = ["Hot Coffee", "Iced Latte"];
+  const colors = [THEME.colors.accent2, THEME.colors.accent3];
+  products.forEach((product, i) => {
+    const x = 0.6 + i * 6.15;
+    const fp = D.significance[product].price_points;
+    slide.addShape("roundRect", { x, y: 1.45, w: 5.9, h: 1.4, rectRadius: 0.07, fill: { color: colors[i] } });
+    slide.addText(product + ": price points", { x: x + 0.3, y: 1.6, w: 5.3, h: 0.35, fontSize: 13, bold: true, color: "FFFFFF", fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+    slide.addText(
+      `Friedman χ² = ${fp.friedman_chi2}, p < 0.0001 — all 3 prices differ significantly (every pairwise comparison significant after Bonferroni correction)`,
+      { x: x + 0.3, y: 1.98, w: 5.3, h: 0.8, fontSize: 12, color: "F5E9DA", fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, lineSpacingMultiple: 1.15 }
+    );
+  });
+
+  function segRows(product, segKey) {
+    const seg = D.significance[product][segKey];
+    const rows = [["Price", "Sig.?"]];
+    seg.by_price.forEach((r) => rows.push([r.price_col.split("_")[1] ? "$" + r.price_col.split("_")[1] : r.price_col, r.significant_at_05 ? "Yes (p<.05)" : "No"]));
+    return rows;
+  }
+  function styledTable(rows, headerColor) {
+    return rows.map((r, i) => r.map((cell) => ({ text: cell, options: { bold: i === 0, color: i === 0 ? "FFFFFF" : (cell === "No" ? THEME.colors.accent1 : THEME.colors.dk2), fill: i === 0 ? { color: headerColor } : (i % 2 === 0 ? { color: "FBF5EE" } : { color: "FFFFFF" }), align: "center", fontSize: 11.5, valign: "middle" } })));
+  }
+
+  slide.addText("Dining plan gap, by price", { x: 0.6, y: 3.15, w: 2.85, h: 0.3, fontSize: 12, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(styledTable(segRows("Hot Coffee", "by_dining_plan"), THEME.colors.accent2), { x: 0.6, y: 3.47, w: 2.85, h: 1.3, colW: [1.42, 1.43], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("(Hot Coffee)", { x: 0.6, y: 4.82, w: 2.85, h: 0.3, fontSize: 10, italic: true, color: THEME.colors.accent2, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, align: "center" });
+
+  slide.addText("Undergrad/grad gap, by price", { x: 3.6, y: 3.15, w: 2.85, h: 0.3, fontSize: 12, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(styledTable(segRows("Hot Coffee", "by_student_status"), THEME.colors.accent2), { x: 3.6, y: 3.47, w: 2.85, h: 1.3, colW: [1.42, 1.43], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("(Hot Coffee)", { x: 3.6, y: 4.82, w: 2.85, h: 0.3, fontSize: 10, italic: true, color: THEME.colors.accent2, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, align: "center" });
+
+  slide.addText("Dining plan gap, by price", { x: 6.75, y: 3.15, w: 2.85, h: 0.3, fontSize: 12, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(styledTable(segRows("Iced Latte", "by_dining_plan"), THEME.colors.accent3), { x: 6.75, y: 3.47, w: 2.85, h: 1.3, colW: [1.42, 1.43], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("(Iced Latte)", { x: 6.75, y: 4.82, w: 2.85, h: 0.3, fontSize: 10, italic: true, color: THEME.colors.accent3, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, align: "center" });
+
+  slide.addText("Undergrad/grad gap, by price", { x: 9.75, y: 3.15, w: 2.85, h: 0.3, fontSize: 12, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(styledTable(segRows("Iced Latte", "by_student_status"), THEME.colors.accent3), { x: 9.75, y: 3.47, w: 2.85, h: 1.3, colW: [1.42, 1.43], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("(Iced Latte)", { x: 9.75, y: 4.82, w: 2.85, h: 0.3, fontSize: 10, italic: true, color: THEME.colors.accent3, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, align: "center" });
+
+  slide.addText(
+    "The demand curve itself is rock-solid (both products, p<0.0001). The segment story is more nuanced: the iced latte's dining-plan and undergrad/grad gaps are significant at every price, but for hot coffee, both gaps only emerge at the higher prices — not at the cheapest tested point, where everyone is willing to buy regardless of segment.",
+    { x: 0.6, y: 5.0, w: 12.1, h: 1.9, fontSize: 12.5, color: THEME.colors.dk2, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, lineSpacingMultiple: 1.15 }
+  );
+}
+
+// ---------- Regression / elasticity ----------
+{
+  const slide = addContentSlide("Price Elasticity: A Regression Model", "Purchase probability ≈ price + segments, with respondent-clustered standard errors");
+
+  function regRow(coef) {
+    const sig = coef.p_value < 0.001 ? "***" : coef.p_value < 0.01 ? "**" : coef.p_value < 0.05 ? "*" : "";
+    return [coef.coef.toFixed(3) + sig, coef.p_value < 0.001 ? "<0.001" : coef.p_value.toFixed(3)];
+  }
+  const coffeeReg = D.regression["Hot Coffee"].coefficients;
+  const latteReg = D.regression["Iced Latte"].coefficients;
+  const rows = [["Variable", "Coffee coef", "p", "Latte coef", "p"]];
+  const names = [["price", "Price ($)"], ["is_dining_plan_yes", "Dining plan = Yes"], ["is_undergrad", "Undergrad"], ["is_female", "Female"]];
+  names.forEach(([key, label]) => {
+    const c = regRow(coffeeReg[key]);
+    const l = regRow(latteReg[key]);
+    rows.push([label, c[0], c[1], l[0], l[1]]);
+  });
+  const tableRows = rows.map((r, i) => r.map((cell) => ({ text: cell, options: { bold: i === 0, color: i === 0 ? "FFFFFF" : THEME.colors.dk2, fill: i === 0 ? { color: THEME.colors.accent2 } : (i % 2 === 0 ? { color: "FBF5EE" } : { color: "FFFFFF" }), align: "center", fontSize: 12, valign: "middle" } })));
+  slide.addTable(tableRows, { x: 0.6, y: 1.5, w: 7.2, h: 2.4, colW: [2.2, 1.45, 1.0, 1.45, 1.1], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("*** p<0.001  ** p<0.01  * p<0.05       n=630 (210 respondents × 3 prices), clustered by respondent", { x: 0.6, y: 3.98, w: 7.2, h: 0.4, fontSize: 10.5, italic: true, color: THEME.colors.accent2, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0 });
+
+  slide.addShape("roundRect", { x: 0.6, y: 4.55, w: 7.2, h: 1.85, rectRadius: 0.07, fill: { color: THEME.colors.dk1 } });
+  slide.addText(
+    [
+      { text: "Headline: ", options: { bold: true, color: THEME.colors.accent4 } },
+      { text: "every $0.10 price increase costs about 4.1 points of purchase probability for coffee, 2.6 points for latte — coffee demand is more price-sensitive per dollar (both p<0.001).", options: { color: "F5E9DA", breakLine: true } },
+      { text: "", options: { breakLine: true } },
+      { text: "Confound found: ", options: { bold: true, color: THEME.colors.accent4 } },
+      { text: "once dining-plan status is controlled for, the undergrad effect vanishes (p=0.93 coffee, p=0.30 latte) — the earlier “undergrads buy more” finding is largely undergrads having more dining plans, not a class-year effect.", options: { color: "F5E9DA" } },
+    ],
+    { x: 0.9, y: 4.72, w: 6.6, h: 1.55, fontSize: 12, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, lineSpacingMultiple: 1.15 }
+  );
+
+  slide.addText("What this means for the price-discrimination slide", { x: 8.1, y: 1.5, w: 4.6, h: 0.4, fontSize: 13.5, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addText(
+    [
+      { text: "Dining-plan status survives the regression as the real, independent driver (significant for latte, marginal for coffee) — strengthening, not weakening, the recommendation to prioritize Dining Dollars integration over any discount.", options: { color: THEME.colors.dk2, breakLine: true, bullet: true } },
+      { text: "The “target undergrads less” framing should really be “target dining-plan holders less” — the two overlap heavily, but dining-plan status is the variable actually doing the work.", options: { color: THEME.colors.dk2, bullet: true } },
+    ],
+    { x: 8.1, y: 2.0, w: 4.6, h: 3.2, fontSize: 12.5, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, paraSpaceAfter: 10, lineSpacingMultiple: 1.15 }
+  );
+}
+
 pres.addSection({ title: "Recommendation" });
 // ---------- Stony Brook comparable ----------
 {
@@ -394,7 +486,7 @@ pres.addSection({ title: "Recommendation" });
 
 // ---------- Price discrimination ----------
 {
-  const slide = addContentSlide("Price Discrimination: What the Segments Argue For", "Dining-plan holders and undergrads buy MORE at every price — not less", "Recommendation");
+  const slide = addContentSlide("Price Discrimination: What the Segments Argue For", "Dining-plan status — not class year — is the segment that really buys MORE at every price", "Recommendation");
 
   const latteRev = D.revenue_maximizing.filter((r) => r.product === "Iced Latte" && (r.segment === "dining_plan" || r.segment === "student_status"));
   const rows = [["Segment", "At lowest tested price, prob.", "Revenue index"]];
@@ -414,14 +506,14 @@ pres.addSection({ title: "Recommendation" });
   slide.addShape("roundRect", { x: 6.9, y: 1.65, w: 5.85, h: 2.7, rectRadius: 0.08, fill: { color: THEME.colors.dk1 } });
   slide.addText("The counterintuitive finding", { x: 7.25, y: 1.85, w: 5.2, h: 0.35, fontSize: 13.5, bold: true, color: THEME.colors.accent4, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
   slide.addText(
-    "Undergrads and dining-plan holders aren't price-shy — they're the segments MOST willing to pay. A blanket \"student discount\" would discount the customers already most willing to buy at full price.",
-    { x: 7.25, y: 2.25, w: 5.2, h: 2.0, fontSize: 13, color: "F5E9DA", fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, lineSpacingMultiple: 1.2 }
+    "Dining-plan holders aren't price-shy — they're the segment MOST willing to pay, and the regression confirms this holds even after controlling for everything else. Undergrads look the same way in the raw averages, but that's mostly because undergrads disproportionately have dining plans — once dining-plan status is accounted for, class year alone adds nothing. A blanket \"student discount\" would discount the customers already most willing to buy at full price.",
+    { x: 7.25, y: 2.25, w: 5.2, h: 2.0, fontSize: 12, color: "F5E9DA", fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0, lineSpacingMultiple: 1.15 }
   );
 
   slide.addText("What we'd recommend instead", { x: 0.6, y: 4.65, w: 12.1, h: 0.4, fontSize: 15, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
   const bullets = [
     { text: "Prioritize Dining Dollars integration operationally (proven feasible at Stony Brook) over a price discount — it converts an already-high-willingness segment into actual purchases by removing payment friction, not price.", options: { color: THEME.colors.dk2, breakLine: true, bullet: true } },
-    { text: "If a promotion is wanted, target it at graduate students and non-dining-plan holders (the segments showing measurably lower willingness), not undergrads — standard price discrimination logic: discount the price-sensitive segment, not the one already willing to pay.", options: { color: THEME.colors.dk2, bullet: true } },
+    { text: "If a promotion is wanted, target it at non-dining-plan holders specifically (the segment the regression shows is actually price-resistant), not undergrads as a class — standard price discrimination logic: discount the price-sensitive segment, not the one already willing to pay.", options: { color: THEME.colors.dk2, bullet: true } },
   ];
   slide.addText(bullets, { x: 0.6, y: 5.1, w: 12.1, h: 1.8, fontSize: 13.5, isTextBox: true, margin: 0, paraSpaceAfter: 8, lineSpacingMultiple: 1.1 });
 }

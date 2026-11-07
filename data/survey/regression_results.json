@@ -1,0 +1,86 @@
+{
+  "Hot Coffee": {
+    "n_obs": 630,
+    "n_clusters": 210,
+    "r_squared": 0.1015,
+    "coefficients": {
+      "Intercept": {
+        "coef": 1.63061,
+        "std_err": 0.13582,
+        "p_value": 3.299753671761919e-33,
+        "ci_low": 1.36442,
+        "ci_high": 1.89681
+      },
+      "price": {
+        "coef": -0.40857,
+        "std_err": 0.038,
+        "p_value": 5.728884519602557e-27,
+        "ci_low": -0.48304,
+        "ci_high": -0.3341
+      },
+      "is_dining_plan_yes": {
+        "coef": 0.07209,
+        "std_err": 0.03947,
+        "p_value": 0.06780026715934107,
+        "ci_low": -0.00527,
+        "ci_high": 0.14945
+      },
+      "is_undergrad": {
+        "coef": -0.00325,
+        "std_err": 0.03926,
+        "p_value": 0.9339272165927216,
+        "ci_low": -0.0802,
+        "ci_high": 0.07369
+      },
+      "is_female": {
+        "coef": 0.02706,
+        "std_err": 0.02821,
+        "p_value": 0.3373264252807854,
+        "ci_low": -0.02822,
+        "ci_high": 0.08234
+      }
+    }
+  },
+  "Iced Latte": {
+    "n_obs": 630,
+    "n_clusters": 210,
+    "r_squared": 0.133,
+    "coefficients": {
+      "Intercept": {
+        "coef": 1.60401,
+        "std_err": 0.146,
+        "p_value": 4.448373360891764e-28,
+        "ci_low": 1.31786,
+        "ci_high": 1.89017
+      },
+      "price": {
+        "coef": -0.25905,
+        "std_err": 0.02564,
+        "p_value": 5.379173916081753e-24,
+        "ci_low": -0.3093,
+        "ci_high": -0.20879
+      },
+      "is_dining_plan_yes": {
+        "coef": 0.0842,
+        "std_err": 0.03466,
+        "p_value": 0.01514564863372452,
+        "ci_low": 0.01625,
+        "ci_high": 0.15214
+      },
+      "is_undergrad": {
+        "coef": 0.04142,
+        "std_err": 0.04004,
+        "p_value": 0.30086208492322397,
+        "ci_low": -0.03705,
+        "ci_high": 0.1199
+      },
+      "is_female": {
+        "coef": 0.00697,
+        "std_err": 0.02449,
+        "p_value": 0.7760328224091108,
+        "ci_low": -0.04104,
+        "ci_high": 0.05498
+      }
+    }
+  }
+}

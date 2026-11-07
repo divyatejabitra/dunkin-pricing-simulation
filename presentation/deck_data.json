@@ -455,6 +455,310 @@
       "revenue_index": 2.0383
     }
   ],
+  "significance": {
+    "Hot Coffee": {
+      "price_points": {
+        "friedman_chi2": 195.04,
+        "friedman_p": 4.437238565195655e-43,
+        "significant_at_05": true,
+        "pairwise_wilcoxon_bonferroni": [
+          {
+            "pair": "coffee_3.29 vs coffee_3.49",
+            "wilcoxon_stat": 215.0,
+            "p_raw": 8.27825222529575e-20,
+            "p_bonferroni": 2.483475667588725e-19,
+            "significant_at_05": true
+          },
+          {
+            "pair": "coffee_3.49 vs coffee_3.69",
+            "wilcoxon_stat": 316.0,
+            "p_raw": 9.108199350530139e-15,
+            "p_bonferroni": 2.7324598051590417e-14,
+            "significant_at_05": true
+          },
+          {
+            "pair": "coffee_3.29 vs coffee_3.69",
+            "wilcoxon_stat": 289.5,
+            "p_raw": 2.0069296956424047e-23,
+            "p_bonferroni": 6.020789086927214e-23,
+            "significant_at_05": true
+          }
+        ]
+      },
+      "by_dining_plan": {
+        "group_a": "Yes",
+        "group_b": "No",
+        "by_price": [
+          {
+            "price_col": "coffee_3.29",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 4.0,
+            "median_b": 4.0,
+            "u_stat": 5367.0,
+            "p_raw": 0.036542704757597806,
+            "p_bonferroni": 0.10962811427279343,
+            "significant_at_05": false
+          },
+          {
+            "price_col": "coffee_3.49",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 4.0,
+            "median_b": 3.0,
+            "u_stat": 5720.0,
+            "p_raw": 0.0036033494212556823,
+            "p_bonferroni": 0.010810048263767047,
+            "significant_at_05": true
+          },
+          {
+            "price_col": "coffee_3.69",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 3.0,
+            "median_b": 2.0,
+            "u_stat": 5747.0,
+            "p_raw": 0.0030838801727527216,
+            "p_bonferroni": 0.009251640518258164,
+            "significant_at_05": true
+          }
+        ]
+      },
+      "by_student_status": {
+        "group_a": "Undergraduate student",
+        "group_b": "Graduate student",
+        "by_price": [
+          {
+            "price_col": "coffee_3.29",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 4.0,
+            "median_b": 4.0,
+            "u_stat": 3340.0,
+            "p_raw": 0.5057265502312618,
+            "p_bonferroni": 1.0,
+            "significant_at_05": false
+          },
+          {
+            "price_col": "coffee_3.49",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 4.0,
+            "median_b": 3.0,
+            "u_stat": 3795.5,
+            "p_raw": 0.030949109383989284,
+            "p_bonferroni": 0.09284732815196785,
+            "significant_at_05": false
+          },
+          {
+            "price_col": "coffee_3.69",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 3.0,
+            "median_b": 2.0,
+            "u_stat": 3999.5,
+            "p_raw": 0.004777509939299905,
+            "p_bonferroni": 0.014332529817899717,
+            "significant_at_05": true
+          }
+        ]
+      }
+    },
+    "Iced Latte": {
+      "price_points": {
+        "friedman_chi2": 187.23,
+        "friedman_p": 2.208389070946708e-41,
+        "significant_at_05": true,
+        "pairwise_wilcoxon_bonferroni": [
+          {
+            "pair": "latte_5.29 vs latte_5.59",
+            "wilcoxon_stat": 440.0,
+            "p_raw": 8.649904468212294e-17,
+            "p_bonferroni": 2.5949713404636883e-16,
+            "significant_at_05": true
+          },
+          {
+            "pair": "latte_5.59 vs latte_5.89",
+            "wilcoxon_stat": 405.0,
+            "p_raw": 7.448808437582409e-17,
+            "p_bonferroni": 2.234642531274723e-16,
+            "significant_at_05": true
+          },
+          {
+            "pair": "latte_5.29 vs latte_5.89",
+            "wilcoxon_stat": 362.5,
+            "p_raw": 7.43412436595451e-23,
+            "p_bonferroni": 2.230237309786353e-22,
+            "significant_at_05": true
+          }
+        ]
+      },
+      "by_dining_plan": {
+        "group_a": "Yes",
+        "group_b": "No",
+        "by_price": [
+          {
+            "price_col": "latte_5.29",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 4.0,
+            "median_b": 3.0,
+            "u_stat": 6452.0,
+            "p_raw": 1.4743381177183103e-06,
+            "p_bonferroni": 4.4230143531549305e-06,
+            "significant_at_05": true
+          },
+          {
+            "price_col": "latte_5.59",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 4.0,
+            "median_b": 3.0,
+            "u_stat": 6522.0,
+            "p_raw": 7.366373840353124e-07,
+            "p_bonferroni": 2.2099121521059374e-06,
+            "significant_at_05": true
+          },
+          {
+            "price_col": "latte_5.89",
+            "n_a": 62,
+            "n_b": 148,
+            "median_a": 3.0,
+            "median_b": 2.0,
+            "u_stat": 6373.0,
+            "p_raw": 4.5037479934665725e-06,
+            "p_bonferroni": 1.3511243980399718e-05,
+            "significant_at_05": true
+          }
+        ]
+      },
+      "by_student_status": {
+        "group_a": "Undergraduate student",
+        "group_b": "Graduate student",
+        "by_price": [
+          {
+            "price_col": "latte_5.29",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 4.0,
+            "median_b": 3.5,
+            "u_stat": 4072.5,
+            "p_raw": 0.0019672921954932694,
+            "p_bonferroni": 0.005901876586479808,
+            "significant_at_05": true
+          },
+          {
+            "price_col": "latte_5.59",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 4.0,
+            "median_b": 3.0,
+            "u_stat": 4286.5,
+            "p_raw": 0.00015434164139237194,
+            "p_bonferroni": 0.00046302492417711583,
+            "significant_at_05": true
+          },
+          {
+            "price_col": "latte_5.89",
+            "n_a": 47,
+            "n_b": 134,
+            "median_a": 3.0,
+            "median_b": 2.0,
+            "u_stat": 4262.5,
+            "p_raw": 0.00019905763487648926,
+            "p_bonferroni": 0.0005971729046294678,
+            "significant_at_05": true
+          }
+        ]
+      }
+    }
+  },
+  "regression": {
+    "Hot Coffee": {
+      "n_obs": 630,
+      "n_clusters": 210,
+      "r_squared": 0.1015,
+      "coefficients": {
+        "Intercept": {
+          "coef": 1.63061,
+          "std_err": 0.13582,
+          "p_value": 3.299753671761919e-33,
+          "ci_low": 1.36442,
+          "ci_high": 1.89681
+        },
+        "price": {
+          "coef": -0.40857,
+          "std_err": 0.038,
+          "p_value": 5.728884519602557e-27,
+          "ci_low": -0.48304,
+          "ci_high": -0.3341
+        },
+        "is_dining_plan_yes": {
+          "coef": 0.07209,
+          "std_err": 0.03947,
+          "p_value": 0.06780026715934107,
+          "ci_low": -0.00527,
+          "ci_high": 0.14945
+        },
+        "is_undergrad": {
+          "coef": -0.00325,
+          "std_err": 0.03926,
+          "p_value": 0.9339272165927216,
+          "ci_low": -0.0802,
+          "ci_high": 0.07369
+        },
+        "is_female": {
+          "coef": 0.02706,
+          "std_err": 0.02821,
+          "p_value": 0.3373264252807854,
+          "ci_low": -0.02822,
+          "ci_high": 0.08234
+        }
+      }
+    },
+    "Iced Latte": {
+      "n_obs": 630,
+      "n_clusters": 210,
+      "r_squared": 0.133,
+      "coefficients": {
+        "Intercept": {
+          "coef": 1.60401,
+          "std_err": 0.146,
+          "p_value": 4.448373360891764e-28,
+          "ci_low": 1.31786,
+          "ci_high": 1.89017
+        },
+        "price": {
+          "coef": -0.25905,
+          "std_err": 0.02564,
+          "p_value": 5.379173916081753e-24,
+          "ci_low": -0.3093,
+          "ci_high": -0.20879
+        },
+        "is_dining_plan_yes": {
+          "coef": 0.0842,
+          "std_err": 0.03466,
+          "p_value": 0.01514564863372452,
+          "ci_low": 0.01625,
+          "ci_high": 0.15214
+        },
+        "is_undergrad": {
+          "coef": 0.04142,
+          "std_err": 0.04004,
+          "p_value": 0.30086208492322397,
+          "ci_low": -0.03705,
+          "ci_high": 0.1199
+        },
+        "is_female": {
+          "coef": 0.00697,
+          "std_err": 0.02449,
+          "p_value": 0.7760328224091108,
+          "ci_low": -0.04104,
+          "ci_high": 0.05498
+        }
+      }
+    }
+  },
   "stony_brook": {
     "hot_coffee_large_20oz": 3.68,
     "iced_latte_direct_match": null,

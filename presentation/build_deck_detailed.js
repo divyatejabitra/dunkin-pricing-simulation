@@ -226,8 +226,77 @@ addSegmentSlideDetailed(
   addExplanation(slide, [
     { text: "For every segment examined and both products, the revenue index (price × converted average purchase probability) is highest at the LOWEST price tested and falls at every step up from there. In plain terms: within the range we tested, demand is elastic enough that cutting price gains more in volume than it loses in per-unit revenue, every time.", options: {} },
     { text: "That is a real, consistent finding — but it is important not to over-claim what it proves. We tested three prices per product, all fairly close together (40 cents apart for coffee, 60 cents apart for latte). Revenue falling steadily across all three tested points tells us the true revenue-maximizing price is AT OR BELOW our lowest tested point ($3.29 for coffee, $5.29 for latte). It does NOT tell us that $3.29 or $5.29 IS the true optimum — we never bracketed a peak, because we never tested anything lower. A price of $2.99, for instance, might generate even more revenue; this design simply can't see that.", options: {} },
-    { text: "This finding sits in real tension with the real-world benchmark on the next slide, which is exactly why we present both rather than picking the number the survey alone would suggest.", options: { bold: true, color: THEME.colors.dk1 } },
+    { text: "This finding sits in real tension with the real-world benchmark later in this document, which is exactly why we present both rather than picking the number the survey alone would suggest.", options: { bold: true, color: THEME.colors.dk1 } },
   ], { x: 3.8, y: 1.45, w: 8.9, h: 5.1, fontSize: 13.5 });
+}
+
+// ---------- Statistical significance (detailed) ----------
+{
+  const slide = addContentSlide("Are These Differences Statistically Significant?", "Friedman tests across prices, Mann-Whitney tests across segments");
+
+  function segRows(product, segKey, headerColor) {
+    const seg = D.significance[product][segKey];
+    const rows = [["Price", "Median A", "Median B", "p (Bonferroni)", "Sig.?"]];
+    seg.by_price.forEach((r) => rows.push([
+      "$" + r.price_col.split("_")[1],
+      r.median_a.toFixed(1),
+      r.median_b.toFixed(1),
+      r.p_bonferroni < 0.001 ? "<0.001" : r.p_bonferroni.toFixed(3),
+      r.significant_at_05 ? "Yes" : "No",
+    ]));
+    return rows.map((r, i) => r.map((cell) => ({ text: cell, options: { bold: i === 0, color: i === 0 ? "FFFFFF" : (cell === "No" ? THEME.colors.accent1 : THEME.colors.dk2), fill: i === 0 ? { color: headerColor } : (i % 2 === 0 ? { color: "FBF5EE" } : { color: "FFFFFF" }), align: "center", fontSize: 10.5, valign: "middle" } })));
+  }
+
+  const coffeeFp = D.significance["Hot Coffee"].price_points;
+  const latteFp = D.significance["Iced Latte"].price_points;
+
+  slide.addText("Dining plan (Hot Coffee, A=Yes/B=No)", { x: 0.6, y: 1.2, w: 5.9, h: 0.28, fontSize: 10.5, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(segRows("Hot Coffee", "by_dining_plan", THEME.colors.accent2), { x: 0.6, y: 1.48, w: 5.9, h: 1.0, colW: [1.0, 1.15, 1.15, 1.4, 1.2], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+
+  slide.addText("Dining plan (Iced Latte, A=Yes/B=No)", { x: 6.8, y: 1.2, w: 5.9, h: 0.28, fontSize: 10.5, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(segRows("Iced Latte", "by_dining_plan", THEME.colors.accent3), { x: 6.8, y: 1.48, w: 5.9, h: 1.0, colW: [1.0, 1.15, 1.15, 1.4, 1.2], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+
+  slide.addText("Undergrad/Grad (Hot Coffee, A=Undergrad/B=Grad)", { x: 0.6, y: 2.65, w: 5.9, h: 0.28, fontSize: 10.5, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(segRows("Hot Coffee", "by_student_status", THEME.colors.accent2), { x: 0.6, y: 2.93, w: 5.9, h: 1.0, colW: [1.0, 1.15, 1.15, 1.4, 1.2], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+
+  slide.addText("Undergrad/Grad (Iced Latte, A=Undergrad/B=Grad)", { x: 6.8, y: 2.65, w: 5.9, h: 0.28, fontSize: 10.5, bold: true, color: THEME.colors.dk1, fontFace: THEME.headFontFace, isTextBox: true, margin: 0 });
+  slide.addTable(segRows("Iced Latte", "by_student_status", THEME.colors.accent3), { x: 6.8, y: 2.93, w: 5.9, h: 1.0, colW: [1.0, 1.15, 1.15, 1.4, 1.2], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+
+  addExplanation(slide, [
+    { text: `A real finding needs more than "the means look different" — it needs a test confirming that difference isn't just sampling noise. Since each respondent rated all 3 prices per product (repeated measures), we ran a Friedman test (the non-parametric equivalent of a repeated-measures ANOVA, appropriate for ordinal 1–5 ratings) across the three prices, then pairwise Wilcoxon signed-rank tests between each price pair, Bonferroni-corrected for 3 comparisons per product.`, options: {} },
+    { text: `The result is unambiguous: Hot Coffee (Friedman χ²=${coffeeFp.friedman_chi2}, p<0.0001) and Iced Latte (χ²=${latteFp.friedman_chi2}, p<0.0001) both show the three tested prices are genuinely different, and every pairwise comparison stays significant after correction. The demand curve on the earlier slides is not an artifact of chance.`, options: {} },
+    { text: `The segment story (tables above) is more nuanced than the earlier descriptive slides implied. For iced latte, both the dining-plan and undergrad/grad gaps are significant at all three prices. For hot coffee, both gaps are NOT significant at the cheapest price ($3.29) and only emerge as price rises — at the lowest price everyone is willing to buy regardless of segment.`, options: {} },
+  ], { x: 0.6, y: 4.15, w: 12.1, h: 3.1, fontSize: 11 });
+}
+
+// ---------- Regression / elasticity (detailed) ----------
+{
+  const slide = addContentSlide("Price Elasticity: A Regression Model", "Purchase probability ≈ price + segments, with respondent-clustered standard errors");
+
+  function regRow(coef) {
+    const sig = coef.p_value < 0.001 ? "***" : coef.p_value < 0.01 ? "**" : coef.p_value < 0.05 ? "*" : "";
+    return [coef.coef.toFixed(3) + sig, coef.p_value < 0.001 ? "<.001" : coef.p_value.toFixed(3)];
+  }
+  const coffeeReg = D.regression["Hot Coffee"].coefficients;
+  const latteReg = D.regression["Iced Latte"].coefficients;
+  const rows = [["Variable", "Coffee", "p", "Latte", "p"]];
+  const names = [["price", "Price ($)"], ["is_dining_plan_yes", "Dining plan"], ["is_undergrad", "Undergrad"], ["is_female", "Female"]];
+  names.forEach(([key, label]) => {
+    const c = regRow(coffeeReg[key]);
+    const l = regRow(latteReg[key]);
+    rows.push([label, c[0], c[1], l[0], l[1]]);
+  });
+  const tableRows = rows.map((r, i) => r.map((cell) => ({ text: cell, options: { bold: i === 0, color: i === 0 ? "FFFFFF" : THEME.colors.dk2, fill: i === 0 ? { color: THEME.colors.accent2 } : (i % 2 === 0 ? { color: "FBF5EE" } : { color: "FFFFFF" }), align: "center", fontSize: 11, valign: "middle" } })));
+  slide.addTable(tableRows, { x: 8.9, y: 1.4, w: 3.8, h: 2.3, colW: [0.9, 0.85, 0.6, 0.85, 0.6], border: { type: "solid", color: "E6D9C8", pt: 0.75 }, autoPage: false });
+  slide.addText("*** p<0.001  ** p<0.01  * p<0.05\nn=630 (210 × 3 prices), clustered by respondent", { x: 8.9, y: 3.75, w: 3.8, h: 0.6, fontSize: 9.5, italic: true, color: THEME.colors.accent2, fontFace: THEME.bodyFontFace, isTextBox: true, margin: 0 });
+
+  addExplanation(slide, [
+    { text: "A regression lets us estimate price elasticity directly, rather than just comparing three discrete points. We regressed each response's converted purchase probability on price plus dummy variables for dining-plan status, undergrad status, and gender, fit separately per product.", options: {} },
+    { text: "One technical choice: each of the 210 respondents contributes 3 observations per product (one per price), so those aren't independent — treating them as 630 independent points would understate the true standard errors. We used cluster-robust standard errors, clustered by respondent, to correct for this.", options: {} },
+    { text: `Headline: the price coefficient is highly significant for both products (p<0.001). Every $0.10 price increase costs roughly 4.1 points of purchase probability for hot coffee and 2.6 points for iced latte — coffee demand is MORE price-sensitive per dollar, holding segment constant.`, options: {} },
+    { text: "More interesting: once segment variables share one model, dining-plan status remains a real, independent predictor (significant for latte p=0.015, marginal for coffee p=0.068), but the undergrad dummy loses all significance (p=0.93 coffee, p=0.30 latte). A classic confound: “undergrads buy more” wasn't really about being an undergrad — it's explained by undergrads being more likely to have a dining plan. Controlled for, class year alone adds nothing.", options: { bold: true, color: THEME.colors.dk1 } },
+    { text: "This refines the price-discrimination conclusion later in this document: prioritizing Dining Dollars integration over a discount gets stronger evidence here, while “undergrad” as a target should really read as “dining-plan holder.”", options: {} },
+  ], { x: 0.6, y: 1.4, w: 8.1, h: 5.9, fontSize: 11 });
 }
 
 // ---------- Slide 9: Stony Brook (detailed) ----------
@@ -272,7 +341,7 @@ pres.addSection({ title: "Recommendation" });
 
 // ---------- Slide 11: price discrimination (detailed) ----------
 {
-  const slide = addContentSlide("Price Discrimination: What the Segments Argue For", "Dining-plan holders and undergrads buy MORE at every price — not less", "Recommendation");
+  const slide = addContentSlide("Price Discrimination: What the Segments Argue For", "Dining-plan status — not class year — is the segment that really buys MORE at every price", "Recommendation");
 
   const latteRev = D.revenue_maximizing.filter((r) => r.product === "Iced Latte" && (r.segment === "dining_plan" || r.segment === "student_status"));
   const rows = [["Segment", "Prob. @ lowest price", "Rev idx"]];
@@ -283,8 +352,8 @@ pres.addSection({ title: "Recommendation" });
 
   addExplanation(slide, [
     { text: "Standard price-discrimination theory says: charge more to the segment with higher willingness to pay, and discount the segment that's actually price-sensitive. Our segment data lets us apply that logic directly rather than guessing at it.", options: {} },
-    { text: "The counterintuitive finding: undergraduates and dining-plan holders are not the price-shy segments — they are the segments MOST willing to buy, at every price point tested, for both products. A blanket “student discount” or “dining-plan discount” would therefore discount the customers who are already most willing to purchase at full price, leaving revenue on the table rather than capturing it.", options: {} },
-    { text: "What we'd recommend instead: prioritize Dining Dollars integration operationally — proven feasible at Stony Brook — over a price discount for that segment. Integration converts an already-high-willingness group into actual purchases by removing payment friction, not by cutting price, which is a strictly better lever when the segment was never price-resistant to begin with. If the team wants to run a promotion at all, standard price-discrimination logic points it at graduate students and non-dining-plan holders — the segments actually showing measurably lower willingness to buy — rather than at undergrads.", options: {} },
+    { text: "The counterintuitive finding: dining-plan holders are not the price-shy segment — they are the segment MOST willing to buy, at every price point tested, for both products, and the regression on the previous slide confirms this holds even after controlling for everything else. Undergraduates look the same way in the raw descriptive numbers above, but the regression showed that's mostly a confound: undergrads disproportionately have dining plans, and once dining-plan status is held constant, class year on its own adds no significant effect. A blanket “student discount” or “dining-plan discount” would therefore discount the customers who are already most willing to purchase at full price, leaving revenue on the table rather than capturing it.", options: {} },
+    { text: "What we'd recommend instead: prioritize Dining Dollars integration operationally — proven feasible at Stony Brook — over a price discount for that segment. Integration converts an already-high-willingness group into actual purchases by removing payment friction, not by cutting price, which is a strictly better lever when the segment was never price-resistant to begin with. If the team wants to run a promotion at all, standard price-discrimination logic points it at non-dining-plan holders specifically — the segment the regression shows is genuinely more price-resistant — rather than at undergrads as a class, since that distinction didn't hold up once properly controlled for.", options: {} },
   ], { x: 5.9, y: 1.45, w: 6.8, h: 5.1, fontSize: 13.5 });
 }
 
